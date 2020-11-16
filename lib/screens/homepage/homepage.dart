@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,9 +10,8 @@ import 'package:schoolapp/const.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
 
 var tiles = {
-  "Attendance": FontAwesomeIcons.fingerprint,
-  "Notification": FontAwesomeIcons.bell,
-  "Class Routine": FontAwesomeIcons.clock,
+  "Attendance": "attendance",
+  "Class Routine": "routine",
   "Exam Routine": "exam",
   "Daily Homework": "homework",
   "Results": "result",
@@ -59,7 +60,10 @@ class _HomePageState extends State<HomePage>
             padding: Constants.padding,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            crossAxisCount:  MediaQuery.of(context).orientation==Orientation.portrait?3:5,
+            crossAxisCount:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 3
+                    : 5,
             children: tiles.keys
                 .map((e) => Padding(
                       padding: const EdgeInsets.all(3.0),
@@ -72,21 +76,36 @@ class _HomePageState extends State<HomePage>
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: (tiles[e] is IconData)
-                                  ? Icon(tiles[e])
-                                  : SizedBox(
-                                      width: 35,
-                                      height: 35,
-                                      child: Image.asset(
-                                        "assets/${tiles[e]}.png",
-                                        fit: BoxFit.cover,
-                                      )),
+                              child: ShaderMask(
+                                shaderCallback: (Rect bounds) {
+                                  return LinearGradient(colors: [
+                                    Color(0xff35f481),
+                                    Color(0xff14c9ca),
+
+                                  ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                  )
+                                      .createShader(bounds);
+                                },
+                                child: SizedBox(
+                                    width: 35,
+                                    height: 35,
+                                    child: Image.asset(
+                                      "assets/${tiles[e]}.png",
+                                      fit: BoxFit.cover,
+                                      color: Colors.white,
+                                    )),
+                              ),
                               // child: Icon(Icons.exam),
                             ),
                             Flexible(
                               child: Text(
                                 e,
-                                style: Constants.title.copyWith(fontSize: 14,),textAlign: TextAlign.center,
+                                style: Constants.title.copyWith(
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ],
