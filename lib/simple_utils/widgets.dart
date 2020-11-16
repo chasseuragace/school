@@ -15,6 +15,19 @@ Widget makeScaleTween({Widget child, context}) {
     },);
 }
 
+Widget makeSlideTween({Widget child, context}) {
+  return TweenAnimationBuilder(duration: const Duration(milliseconds: 300),
+    child: child,
+    curve: Curves.easeInOut,
+    tween: Tween<double>(begin:  MediaQuery.of(context).size.width/4,end: 1),
+    builder: (BuildContext context, double value, Widget child) {
+      return Transform.translate(
+        child: child,
+        offset: Offset(value,0),
+      );
+    },);
+}
+
 showSimpleAlert(BuildContext context,
     {String positiveText = "OK",
       String negativeText = "Cancel",

@@ -136,14 +136,14 @@ class _CardLoginState extends State<CardLogin> {
                             child: val == LoginStates.loading
                                 ? SizedBox(
                                     key: ValueKey("1"),
-                                    height: 45,
+                                    height: 50,
                                     child: Center(
                                         child: CircularProgressIndicator()))
                                 : SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .554,
+                                   /* width:
+                                        MediaQuery.of(context).size.width * .554,*/
                                     key: ValueKey("2"),
-                                    height: 45,
+                                    height: 50,
                                     child: MaterialButton(
                                       elevation: 1, focusElevation: 1,
                                     color: Constants.lightAccent,
@@ -153,9 +153,12 @@ class _CardLoginState extends State<CardLogin> {
                                         if (_formKey.currentState.validate())
                                           _manager.login();
                                       },
-                                      child: Text(
-                                        "Login",
-                                        style: Constants.title.copyWith(fontSize: 20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal:60.0),
+                                        child: Text(
+                                          "Login",
+                                          style: Constants.titleWhite.copyWith(fontSize: 20),
+                                        ),
                                       ),
                                     ),
                                   ),

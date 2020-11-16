@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
+  static EdgeInsets padding= EdgeInsets.symmetric(horizontal:8.0);
   static String appName ="School Gaffer";
   static String passwordValidationError ="Password must contain at least 6 characters.";
   static String phoneValidationError ="Phone number must have exactly 10 digits ";
   static TextStyle title =const TextStyle(
       inherit: false,
       color: Color(0x8a000000),
+      fontFamily: "Roboto",
+      fontSize: 28.0,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.none);
+  static TextStyle titleWhite =const TextStyle(
+      inherit: false,
+      color: Colors.white,
       fontFamily: "Roboto",
       fontSize: 28.0,
       fontWeight: FontWeight.w400,

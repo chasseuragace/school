@@ -19,7 +19,7 @@ class _WalkthroughState extends State<Walkthrough>  {
     {
       "title": "Get latest news and updates",
       "body": "Get notified about all the latest news, updates,"
-          " school events and information on teacher parents meeting",
+          " school events and information on teachers-parents meeting",
       "img": "assets/intro1.png",
     },
     {
