@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:schoolapp/screens/forgotPassword/forgot_password.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
+import 'package:schoolapp/simple_utils/widgets.dart';
 
 import '../../../const.dart';
 
@@ -144,23 +145,11 @@ class _CardLoginState extends State<CardLogin> {
                                         MediaQuery.of(context).size.width * .554,*/
                                     key: ValueKey("2"),
                                     height: 50,
-                                    child: MaterialButton(
-                                      elevation: 1, focusElevation: 1,
-                                    color: Constants.lightAccent,
-                                      shape: StadiumBorder(),
-                                      onPressed: () async {
-                                         FocusScope.of(context).unfocus();
-                                        if (_formKey.currentState.validate())
-                                          _manager.login();
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal:60.0),
-                                        child: Text(
-                                          "Login",
-                                          style: Constants.titleWhite.copyWith(fontSize: 20),
-                                        ),
-                                      ),
-                                    ),
+                                    child:appButton(text: "Login", onTap: () async {
+                                      FocusScope.of(context).unfocus();
+                                      if (_formKey.currentState.validate())
+                                        _manager.login();
+                                    },)
                                   ),
                             duration: Duration(milliseconds: 400),
                           );

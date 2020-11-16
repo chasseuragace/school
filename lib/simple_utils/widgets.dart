@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:schoolapp/const.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget makeScaleTween({Widget child, context}) {
-  return TweenAnimationBuilder(duration: const Duration(milliseconds: 400),
+Widget makeScaleTween({Widget child, context, int duration, Cubic curve}) {
+  return TweenAnimationBuilder(duration:  Duration(milliseconds: duration??400),
     child: child,
-    curve: Curves.easeInOut,
+    curve: curve??Curves.easeInOut,
     tween: Tween<double>(begin: .8,end: 1),
     builder: (BuildContext context, double value, Widget child) {
       return Transform.scale(
@@ -16,7 +16,9 @@ Widget makeScaleTween({Widget child, context}) {
 }
 
 Widget makeSlideTween({Widget child, context}) {
-  return TweenAnimationBuilder(duration: const Duration(milliseconds: 300),
+  return TweenAnimationBuilder(
+
+    duration: const Duration(milliseconds: 300),
     child: child,
     curve: Curves.easeInOut,
     tween: Tween<double>(begin:  MediaQuery.of(context).size.width/4,end: 1),
@@ -27,7 +29,6 @@ Widget makeSlideTween({Widget child, context}) {
       );
     },);
 }
-
 showSimpleAlert(BuildContext context,
     {String positiveText = "OK",
       String negativeText = "Cancel",
@@ -123,8 +124,6 @@ showTermsAndPolicy(BuildContext context,
   );
 }
 
-
-
 Widget menu() {
   var height = 12.0;
   var width = 80.0;
@@ -165,4 +164,34 @@ Widget menu() {
           ],
         ),
       ));
+}
+
+Widget applyShade({Widget child}){
+  return ShaderMask(
+      shaderCallback: (Rect bounds) {
+    return LinearGradient(
+      colors: Constants.tileGradient,
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ).createShader(bounds);
+  },
+  child:child);
+}
+
+Widget appButton({@required String text,@required Function() onTap, bool small=false}){
+ return MaterialButton(
+    elevation: 1, focusElevation: 1,
+    color: Constants.lightAccent,
+    shape: StadiumBorder(),
+    onPressed: () async {
+     onTap();
+    },
+    child: Padding(
+      padding:  EdgeInsets.symmetric(horizontal:small?20.0:60.0),
+      child: Text(
+        text,
+        style: Constants.titleWhite.copyWith(fontSize: 20),
+      ),
+    ),
+  );
 }

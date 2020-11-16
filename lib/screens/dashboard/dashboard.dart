@@ -4,15 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:schoolapp/screens/homepage/homepage.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
-
+import 'package:schoolapp/simple_utils/date_formatter.dart';
 import '../../const.dart';
 import 'custom_bottom_navigation.dart';
 
-
-
 class HomePageWrapper extends StatefulWidget {
-
-   @override
+  @override
   _HomePageWrapperState createState() => _HomePageWrapperState();
 }
 
@@ -22,6 +19,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
   Animation<double> scale;
   Animation<Offset> slide;
   PageController _pageController;
+  String name = "Shree Janata Madhyamik Bidhalaya";
 
   @override
   void initState() {
@@ -48,7 +46,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
       child: Stack(
         children: [
           //drawer background filter
-          backgroundFilter(),
+          drawer(),
           //dashboard page
           AnimatedBuilder(
             animation: animController,
@@ -91,6 +89,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
                           ),
                         ),
                         CustomBottomNavigation(
+                          selectedItemColor: Colors.white,
                           navItems: {
                             "Home": Icons.home,
                             "Notification": Icons.notifications,
@@ -150,42 +149,168 @@ class _HomePageWrapperState extends State<HomePageWrapper>
   AppBar buildAppBar() {
     return AppBar(
       elevation: 0,
-centerTitle: true,
-     title: SizedBox(
-
-       width:  (MediaQuery.of(context).size.width-50)*.8,
-         child: Text("Very Long School name School Name",maxLines: 2,textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,style: Constants.title.copyWith(letterSpacing: 1,fontSize: 20),)),
-      leading:
-      Column(
+      centerTitle: true,
+      /*  title: SizedBox(
+          width: (MediaQuery.of(context).size.width - 50) * .8,
+          child: Text(
+            "Very Long School name School Name",
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: Constants.title.copyWith(letterSpacing: 1, fontSize: 20),
+          )),*/
+      leading: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           IconButton(
             onPressed: () {
               animController.status == AnimationStatus.completed
                   ? animController.reverse()
                   : animController.forward();
             },
-            icon: SizedBox(width: 22,height: 50,child: FittedBox(fit: BoxFit.contain, child: menu())),
+            icon: SizedBox(
+                width: 22,
+                height: 50,
+                child: FittedBox(fit: BoxFit.contain, child: menu())),
           ),
         ],
       ),
     );
   }
 
-  Widget backgroundFilter() {
+  Widget drawer() {
+    var drawerattribs = {"Phone": Icons.phone, "Address": Icons.location_on};
     return Material(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-      ListTile(
-        onTap: () {
-          Provider.of<LoginManger>(context,listen: false).logout(() => print("error logout"));
-        },
-        title: Text("Logout"),
-      )
-        ],
+      child: SafeArea(
+        child: Container(
+          color: Colors.grey[200],
+          width: MediaQuery.of(context).size.width,
+          child: ValueListenableBuilder(
+            builder: (BuildContext context, value, Widget child) {
+             return value? SizedBox.expand() : makeScaleTween(
+               duration:400,
+               child: child,
+               curve:Curves.easeInCubic
+             );
+            },
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      //color: Colors.grey,
+                      width: MediaQuery.of(context).size.width * .6,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start  ,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.grey,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Center(
+                                      child: CircleAvatar(
+                                        radius: 35,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Shree Janata Madhyamik Bidhalaya",
+                                      textAlign: TextAlign.center,
+                                      style: Constants.titleWhite
+                                          .copyWith(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical:8.0,horizontal: 5),
+                            child: Text(
+                              DateTime.now().standard(),
+                              style: Constants.title,
+                            ),
+                          ),
+                          Expanded(
+                            child:!true? Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                ListTile(
+                                  title: Text("No new notice"),
+                                  subtitle: Text("General notice will appear here"),
+
+                                ),
+                                Text(DateTime.now().standard(),style: TextStyle(fontSize: 12,color: Colors.grey),)
+                              ],
+                            ):  ListView.builder(
+                              itemCount: 8,
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom:8.0),
+                                  child: Dismissible(
+
+                                    key: UniqueKey(),
+                                    onDismissed: (dir){
+                                      //todo mark as read , put user id in notification read array, firebse
+                                    },
+                                    child: Material(
+                                      color: Colors.white,
+                                      child:Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          ListTile(
+
+                                            /* onTap: (){
+                                                //todo open notification alert box if has body
+                                              },*/
+                                            title: Text("No new notice"),
+                                            subtitle:  Text("Dear Parents and Students, Greetings of the day. I hope the message finds you "
+                                                "in good health and among family members amidst the Lockdown. Let's be ...",textAlign: TextAlign.justify,),
+
+                                          ),
+                                          Text(DateTime.now().standard(),style: TextStyle(fontSize: 12,color: Colors.grey),)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  ListTile(
+                    onTap: () {
+                      Provider.of<LoginManger>(context, listen: false)
+                          .logout(() => print("error logout"));
+                    },
+                    title: Center(child: Text("Logout")),
+                  )
+                ],
+              ),
+            ), valueListenable: isTouchable,
+          ),
+        ),
       ),
     );
   }
@@ -225,6 +350,4 @@ centerTitle: true,
     scale = Tween<double>(end: .8, begin: 1.0).animate(
         CurvedAnimation(parent: animController, curve: Curves.easeOutExpo));
   }
-
-
 }

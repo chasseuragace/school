@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:schoolapp/simple_utils/widgets.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   final Map<String, IconData> navItems;
@@ -102,9 +103,11 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
           child: Material(
               borderRadius: BorderRadius.circular(20),
               elevation: 2,
-              child: CircleAvatar(
-                backgroundColor: widget.selectorColor,
-                radius: 20,
+              child: applyShade(
+                child: CircleAvatar(
+                  backgroundColor: widget.selectorColor,
+                  radius: 20,
+                ),
               )),
         ),
         Row(

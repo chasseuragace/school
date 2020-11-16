@@ -24,7 +24,9 @@ class Constants {
   static Color lightPrimary = Color(0xffffffff);
   //static Color lightPrimary = Colors.red;
   static Color darkPrimary = Colors.black;
-  static Color lightAccent = Color(0xff38ef7d);
+  static   List<Color> get tileGradient => [lightAccent,lightAccentComplimentary];
+  static Color lightAccent = Color(0xff35f481);
+  static Color lightAccentComplimentary = Color(0xff14c9ca);
   static Color darkAccent = Color(0xff11998e);
   static Color lightBG = Color(0xffffffff);
   static Color darkBG = Colors.black;
@@ -74,4 +76,28 @@ class Constants {
     ),
   );
 
+  static var months = {
+    "1": "Jan",
+    "2": "Feb",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "Aug",
+    "9": "Sep",
+    "10": "Oct",
+    "11": "Nov",
+    "12": "Dec",
+  };
+  static var days = {
+    "1": "Sunday",
+    "2": "Monday",
+    "3": "Tuesday",
+    "4": "Wednesday",
+    "5": "Thursday",
+    "6": "Friday",
+    "7": "Saturday",
+
+  };
 }

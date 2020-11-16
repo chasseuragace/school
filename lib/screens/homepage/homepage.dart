@@ -1,12 +1,13 @@
-import 'dart:ui';
+
+import 'package:schoolapp/screens/homepage/home_page_tile.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:schoolapp/const.dart';
+import 'package:schoolapp/screens/homepage/dog_tag_widget.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
 
 var tiles = {
@@ -64,172 +65,24 @@ class _HomePageState extends State<HomePage>
                 MediaQuery.of(context).orientation == Orientation.portrait
                     ? 3
                     : 5,
-            children: tiles.keys
-                .map((e) => Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Material(
-                        elevation: 1,
-                        borderRadius: BorderRadius.circular(6),
-                        color: Color(0xfff8f8f8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ShaderMask(
-                                shaderCallback: (Rect bounds) {
-                                  return LinearGradient(colors: [
-                                    Color(0xff35f481),
-                                    Color(0xff14c9ca),
-
-                                  ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                  )
-                                      .createShader(bounds);
-                                },
-                                child: SizedBox(
-                                    width: 35,
-                                    height: 35,
-                                    child: Image.asset(
-                                      "assets/${tiles[e]}.png",
-                                      fit: BoxFit.cover,
-                                      color: Colors.white,
-                                    )),
-                              ),
-                              // child: Icon(Icons.exam),
-                            ),
-                            Flexible(
-                              child: Text(
-                                e,
-                                style: Constants.title.copyWith(
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ))
-                .toList(),
+            children: tiles.keys.map((e) => Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: GestureDetector(
+                onTap: () {
+                  //todo implement routes
+                  // Navigator.of(context).pushNamed('/$assetImage');
+                },
+                child: DashBoardTile(tileTitle: e,assetImage: tiles[e],),
+              ),
+            )).toList(),
           )
         ],
       ),
     );
   }
 
+
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-}
-
-class StudentDogTag extends StatelessWidget {
-  const StudentDogTag({
-    Key key,
-    @required this.name,
-    @required this.attributes,
-  }) : super(key: key);
-
-  final String name;
-  final Map<String, String> attributes;
-  final height = 135.0;
-
-  @override
-  Widget build(BuildContext context) {
-    var widthOfImageHolder = MediaQuery.of(context).size.width * .35;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(colors: [
-              Constants.darkAccent,
-              Colors.green,
-              Constants.darkAccent
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
-        child: Row(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: widthOfImageHolder,
-              height: height,
-              color: Colors.white38,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  elevation: 1,
-                  color: Constants.lightAccent.withOpacity(.3),
-                  borderRadius: BorderRadius.circular(widthOfImageHolder),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(widthOfImageHolder),
-                    child: SizedBox(
-                      width: 120 - 16.0,
-                      height: 120 - 16.0,
-                      child: Image.asset(
-                        "assets/user.png",
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 6,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(
-                          "$name",
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: Constants.titleWhite.copyWith(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    ...attributes.keys
-                        .map((e) => Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      e,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          letterSpacing: 1),
-                                    )),
-                                Expanded(
-                                    flex: 2,
-                                    child: Text(attributes[e],
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14,
-                                            letterSpacing: 1))),
-                              ],
-                            ))
-                        .toList()
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }
