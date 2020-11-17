@@ -14,7 +14,7 @@ class DashBoardTile extends StatelessWidget {
     return Material(
       elevation: 1,
       borderRadius: BorderRadius.circular(6),
-      color: Color(0xfff8f8f8),
+      color: Constants.tilesColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

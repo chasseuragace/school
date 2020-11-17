@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schoolapp/screens/homepage/homepage.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
+import 'package:schoolapp/screens/navigation_wrapper/drawer.dart';
+import 'package:schoolapp/screens/notification/notifications.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
 import '../../const.dart';
@@ -17,9 +19,10 @@ class _HomePageWrapperState extends State<HomePageWrapper>
     with SingleTickerProviderStateMixin {
   AnimationController animController;
   Animation<double> scale;
+  Animation<double> scaleReverce;
   Animation<Offset> slide;
   PageController _pageController;
-  String name = "Shree Janata Madhyamik Bidhalaya";
+  String name = "Shree Janata Purbanchal Madhyamik Bidhalaya";
 
   @override
   void initState() {
@@ -122,9 +125,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
             controller: _pageController,
             children: [
               HomePage(),
-              Container(
-                color: Colors.red,
-              ),
+              NotificationsPage(),
               Container(
                 color: Colors.yellow,
               ),
@@ -179,136 +180,23 @@ class _HomePageWrapperState extends State<HomePageWrapper>
   }
 
   Widget drawer() {
-    var drawerattribs = {"Phone": Icons.phone, "Address": Icons.location_on};
+
     return Material(
       child: SafeArea(
         child: Container(
-          color: Colors.grey[200],
+          color: Colors.white,
           width: MediaQuery.of(context).size.width,
-          child: ValueListenableBuilder(
-            builder: (BuildContext context, value, Widget child) {
-             return value? SizedBox.expand() : makeScaleTween(
-               duration:400,
+          child: AnimatedBuilder(
+            builder: (BuildContext context,  Widget child) {
+             return ScaleTransition(
+               scale: scaleReverce,
                child: child,
-               curve:Curves.easeInCubic
              );
             },
             child: Align(
               alignment: Alignment.topLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      //color: Colors.grey,
-                      width: MediaQuery.of(context).size.width * .6,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start  ,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Material(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.grey,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: CircleAvatar(
-                                        radius: 35,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Shree Janata Madhyamik Bidhalaya",
-                                      textAlign: TextAlign.center,
-                                      style: Constants.titleWhite
-                                          .copyWith(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical:8.0,horizontal: 5),
-                            child: Text(
-                              DateTime.now().standard(),
-                              style: Constants.title,
-                            ),
-                          ),
-                          Expanded(
-                            child:!true? Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                ListTile(
-                                  title: Text("No new notice"),
-                                  subtitle: Text("General notice will appear here"),
-
-                                ),
-                                Text(DateTime.now().standard(),style: TextStyle(fontSize: 12,color: Colors.grey),)
-                              ],
-                            ):  ListView.builder(
-                              itemCount: 8,
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom:8.0),
-                                  child: Dismissible(
-
-                                    key: UniqueKey(),
-                                    onDismissed: (dir){
-                                      //todo mark as read , put user id in notification read array, firebse
-                                    },
-                                    child: Material(
-                                      color: Colors.white,
-                                      child:Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          ListTile(
-
-                                            /* onTap: (){
-                                                //todo open notification alert box if has body
-                                              },*/
-                                            title: Text("No new notice"),
-                                            subtitle:  Text("Dear Parents and Students, Greetings of the day. I hope the message finds you "
-                                                "in good health and among family members amidst the Lockdown. Let's be ...",textAlign: TextAlign.justify,),
-
-                                          ),
-                                          Text(DateTime.now().standard(),style: TextStyle(fontSize: 12,color: Colors.grey),)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  ListTile(
-                    onTap: () {
-                      Provider.of<LoginManger>(context, listen: false)
-                          .logout(() => print("error logout"));
-                    },
-                    title: Center(child: Text("Logout")),
-                  )
-                ],
-              ),
-            ), valueListenable: isTouchable,
+              child: AppDrawer(name:name),
+            ),  animation: scale,
           ),
         ),
       ),
@@ -349,5 +237,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
             CurvedAnimation(parent: animController, curve: Curves.easeInExpo));
     scale = Tween<double>(end: .8, begin: 1.0).animate(
         CurvedAnimation(parent: animController, curve: Curves.easeOutExpo));
+    scaleReverce = Tween<double>(end: 1, begin: .6).animate(
+        CurvedAnimation(parent: animController, curve: Curves.easeInCubic));
   }
 }

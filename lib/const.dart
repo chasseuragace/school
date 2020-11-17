@@ -75,7 +75,7 @@ class Constants {
 //      ),
     ),
   );
-
+  static Color tilesColor = Color(0xfff8f8f8);
   static var months = {
     "1": "Jan",
     "2": "Feb",

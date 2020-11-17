@@ -178,10 +178,10 @@ Widget applyShade({Widget child}){
   child:child);
 }
 
-Widget appButton({@required String text,@required Function() onTap, bool small=false}){
+Widget appButton({@required String text,@required Function() onTap, bool small=false, Color color}){
  return MaterialButton(
     elevation: 1, focusElevation: 1,
-    color: Constants.lightAccent,
+    color: color??Constants.lightAccent,
     shape: StadiumBorder(),
     onPressed: () async {
      onTap();

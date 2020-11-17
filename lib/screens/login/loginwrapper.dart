@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schoolapp/screens/dashboard/dashboard.dart';
+
 
 
 import 'package:schoolapp/screens/login/login.dart';
+import 'package:schoolapp/screens/navigation_wrapper/navigation_wrapper.dart';
 
 
 import 'login_manager.dart';
