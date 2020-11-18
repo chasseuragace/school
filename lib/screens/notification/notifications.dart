@@ -5,7 +5,7 @@ import 'package:schoolapp/screens/navigation_wrapper/material_notification.dart'
 import 'package:schoolapp/simple_utils/widgets.dart';
 
 class NotificationsPage extends StatelessWidget {
-  ValueNotifier<bool> switchDisplay =ValueNotifier<bool>(false);
+final  ValueNotifier<bool> switchDisplay =ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

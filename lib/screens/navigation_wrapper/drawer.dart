@@ -66,24 +66,20 @@ class AppDrawer extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 4),
-                  child: Text("Recent Updates"),
+                  child: Text("Recent Updates",style: Constants.title.copyWith(fontSize: 14),),
                 ),
                 Expanded(
-                  child: !true
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ListTile(
-                              title: Text("No new notice"),
-                              subtitle: Text("General notice will appear here"),
-                            ),
-                            Text(
-                              DateTime.now().standard(),
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.grey),
-                            )
-                          ],
-                        )
+                  child: true
+                      ?  ListView(
+                    children: [
+
+                      MaterialNotification(date: '',signedBy: '',
+                        compact: true,title: "No notifications yet !",
+                        content: "General notifications will appear here.",),
+                    /*  Center(child: Text("Empty!",
+                        style: Constants.title.copyWith(fontSize: 16,color: Colors.grey[300]),)),*/
+                    ],
+                  )
                       : ListView.builder(
                           itemCount: 8,
                           padding: EdgeInsets.zero,

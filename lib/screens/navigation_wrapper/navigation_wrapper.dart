@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schoolapp/screens/calander.dart';
 import 'package:schoolapp/screens/homepage/homepage.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
 import 'package:schoolapp/screens/navigation_wrapper/drawer.dart';
@@ -126,8 +127,8 @@ class _HomePageWrapperState extends State<HomePageWrapper>
             children: [
               HomePage(),
               NotificationsPage(),
-              Container(
-                color: Colors.yellow,
+              CalenderPage(
+
               ),
               Container(
                 color: Colors.orangeAccent,

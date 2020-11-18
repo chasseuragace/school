@@ -57,11 +57,11 @@ class MaterialNotification extends StatelessWidget {
               textAlign: TextAlign.justify,maxLines: compact?4:26 ,overflow: TextOverflow.ellipsis,
             ):null,
           ),
-          Text(
+         Text(
             "-$signedBy",
             style: TextStyle(fontSize: 12, color: Colors.grey),
           ),
-          Text(
+         if(date!='') Text(
             DateTime.now().standard(),
             style: TextStyle(fontSize: 12, color: Colors.grey),
           )
