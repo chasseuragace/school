@@ -15,7 +15,7 @@ class Walkthrough extends StatefulWidget {
 class _WalkthroughState extends State<Walkthrough>  {
 
 
-  List pageInfos = [
+  List pageInfos = const [
     {
       "title": "Get latest news and updates",
       "body": "Get notified about all the latest news, updates,"

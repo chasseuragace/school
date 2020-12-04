@@ -15,13 +15,13 @@ Widget makeScaleTween({Widget child, context, int duration, Cubic curve}) {
     },);
 }
 
-Widget makeSlideTween({Widget child, context}) {
+Widget makeSlideTween({Widget child, @required context}) {
   return TweenAnimationBuilder(
 
     duration: const Duration(milliseconds: 300),
     child: child,
     curve: Curves.easeInOut,
-    tween: Tween<double>(begin:  MediaQuery.of(context).size.width/4,end: 1),
+    tween: Tween<double>(begin:  MediaQuery.of(context).size.width/4,end: 0.0),
     builder: (BuildContext context, double value, Widget child) {
       return Transform.translate(
         child: child,
@@ -177,7 +177,70 @@ Widget applyShade({Widget child}){
   },
   child:child);
 }
+Column statsInChart(BuildContext context,
+    {@required String title, @required double score, String data,
 
+      ///minimal huda required title ra data na huda ni hunxa
+      bool minimal=false,double overrideWith}) {
+
+  var width = overrideWith?? MediaQuery
+      .of(context)
+      .size
+      .width * .8 / 2;
+
+  return Column(
+    children: [
+      SizedBox(
+        width: width,
+        height: width,
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: TweenAnimationBuilder<double>(
+            key: UniqueKey(),
+            tween: Tween<double>(begin: 0.0, end: score),
+            duration: Duration(milliseconds: 800),
+            curve: Curves.fastLinearToSlowEaseIn,
+            builder: (BuildContext context, double value, Widget child) {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    width: width,
+                    height: width,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey[100],
+                      value: value,
+                      strokeWidth: 15,
+                    ),
+                  ),
+                  Text(
+                    "${(value * 100).toStringAsFixed(2)}%",
+                    style: Constants.title.copyWith(fontSize: 20),
+                  )
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+     if(!minimal) ...[SizedBox(
+        width: width,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            style: Constants.title,
+          ),
+        ),
+      ),
+
+        Text(
+          "$data",
+          style: Constants.title.copyWith(fontSize: 16),
+        ),]
+    ],
+  );
+}
 Widget appButton({@required String text,@required Function() onTap, bool small=false, Color color}){
  return MaterialButton(
     elevation: 1, focusElevation: 1,

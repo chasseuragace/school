@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schoolapp/const.dart';
+import 'package:schoolapp/screens/internal_pages/attendance/attendance.dart';
+import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dart';
+import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
+
 import 'package:schoolapp/screens/intro/walkthrough.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
 import 'package:schoolapp/screens/login/loginwrapper.dart';
@@ -43,7 +47,13 @@ class MyApp extends StatelessWidget {
             // TestWidget()
             !LocalStorage.shouldSkipIntro
                 ? Walkthrough()
-                : LoginWrapper());
+                : LoginWrapper(),
+        routes: {
+          Attendance.tag: (context) => Attendance(),
+          ClassRoutine.tag: (context) => ClassRoutine(),
+          ExamRoutine.tag: (context) => ExamRoutine(),
+        },
+        );
       },
     );
   }

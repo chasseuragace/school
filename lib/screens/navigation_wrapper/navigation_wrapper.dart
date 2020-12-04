@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:schoolapp/screens/calander.dart';
+import 'package:schoolapp/screens/calendar/calander.dart';
+
+
 import 'package:schoolapp/screens/homepage/homepage.dart';
-import 'package:schoolapp/screens/login/login_manager.dart';
+
 import 'package:schoolapp/screens/navigation_wrapper/drawer.dart';
 import 'package:schoolapp/screens/notification/notifications.dart';
+import 'package:schoolapp/screens/profile/profile.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
-import 'package:schoolapp/simple_utils/date_formatter.dart';
-import '../../const.dart';
+import 'package:schoolapp/template.dart';
+
 import 'custom_bottom_navigation.dart';
 
 class HomePageWrapper extends StatefulWidget {
@@ -23,7 +25,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
   Animation<double> scaleReverce;
   Animation<Offset> slide;
   PageController _pageController;
-  String name = "Shree Janata Purbanchal Madhyamik Bidhalaya";
+
 
   @override
   void initState() {
@@ -130,9 +132,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
               CalenderPage(
 
               ),
-              Container(
-                color: Colors.orangeAccent,
-              ),
+             Profile(),
             ],
           ),
         )
@@ -196,7 +196,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
             },
             child: Align(
               alignment: Alignment.topLeft,
-              child: AppDrawer(name:name),
+              child: AppDrawer(name:schoolName),
             ),  animation: scale,
           ),
         ),

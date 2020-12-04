@@ -9,23 +9,9 @@ import 'package:flutter/widgets.dart';
 import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/homepage/dog_tag_widget.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
+import 'package:schoolapp/template.dart';
 
-var tiles = {
-  "Attendance": "attendance",
-  "Class Routine": "routine",
-  "Exam Routine": "exam",
-  "Daily Homework": "homework",
-  "Results": "result",
-  "Project Work": "project",
-  "Library": "library",
-  "Suggestions": "suggestions",
-  "School Details": "about",
-  "Language ": "language",
-  "Due Dates": "due",
-  "Subjects": "subjects",
-  "Events": "events",
-  "Articles": "article",
-};
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,27 +22,18 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: ListView(
+        padding: EdgeInsets.zero,
         children: [
-          SizedBox(
+          makeSlideTween(
+        context: context,
+        child: StudentDogTag(name: studentName, attributes: studentDogTagAttributes,image: studentImage,),
+      ),
+      SizedBox(
             height: 10,
           ),
-          Builder(builder: (
-            context,
-          ) {
-            var name = "Thomas Shelby";
-            var attributes = {
-              "DOB": "Jan 27, 2008",
-              "Class": "SIxteen",
-              "Section": "Stone Cold",
-              "Rank": "12",
-            };
-            return makeSlideTween(
-              context: context,
-              child: StudentDogTag(name: name, attributes: attributes),
-            );
-          }),
           GridView.count(
             padding: Constants.padding,
             shrinkWrap: true,
@@ -72,7 +49,12 @@ class _HomePageState extends State<HomePage>
                   //todo implement routes
                   // Navigator.of(context).pushNamed('/$assetImage');
                 },
-                child: DashBoardTile(tileTitle: e,assetImage: tiles[e],),
+                child: DashBoardTile(tileTitle: e,assetImage: tiles[e],
+                onTap :(){
+                  print("$e");
+                   Navigator.of(context).pushNamed('${tiles[e]}');
+                    }
+                ),
               ),
             )).toList(),
           )

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Constants {
+class
+Constants {
   static EdgeInsets padding= EdgeInsets.symmetric(horizontal:8.0);
   static String appName ="School Gaffer";
   static String passwordValidationError ="Password must contain at least 6 characters.";
   static String phoneValidationError ="Phone number must have exactly 10 digits ";
+  static String  defaultloginError =  'Woopsie! Login Failed, please retry in a minute or so.';
+
   static TextStyle title =const TextStyle(
       inherit: false,
       color: Color(0x8a000000),
@@ -30,7 +33,7 @@ class Constants {
   static Color darkAccent = Color(0xff11998e);
   static Color lightBG = Color(0xffffffff);
   static Color darkBG = Colors.black;
-  static String  defaultloginError =  'Woopsie! Login Failed, please retry in a minute or so.';
+
 
   static ThemeData lightTheme = ThemeData(
     fontFamily: GoogleFonts.roboto().fontFamily,
@@ -89,6 +92,19 @@ class Constants {
     "10": "Oct",
     "11": "Nov",
     "12": "Dec",
+  };static var monthsNep = {
+    "1": "Baishakh",
+    "2": "Jestha",
+    "3": "Ashadh",
+    "4": "Shrawan",
+    "5": " Bhadra",
+    "6": "Ashwin",
+    "7": "Kartik",
+    "8": "Mangsir",
+    "9": "	Poush",
+    "10": "Magh",
+    "11": "Falgun",
+    "12": "Chaitra",
   };
   static var days = {
     "1": "Sunday",

@@ -1,15 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:schoolapp/const.dart';
+
 
 class StudentDogTag extends StatelessWidget {
   const StudentDogTag({
     Key key,
     @required this.name,
     @required this.attributes,
+    @required this.image,
   }) : super(key: key);
 
   final String name;
+  final String image;
   final Map<String, String> attributes;
   final height = 135.0;
 
@@ -30,10 +32,15 @@ class StudentDogTag extends StatelessWidget {
         child: Row(
           children: [
             Container(
+              decoration: BoxDecoration(
+                color: Colors.white38,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+              ),
               alignment: Alignment.center,
               width: widthOfImageHolder,
               height: height,
-              color: Colors.white38,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
@@ -46,8 +53,9 @@ class StudentDogTag extends StatelessWidget {
                       width: 120 - 16.0,
                       height: 120 - 16.0,
                       child: Image.asset(
-                        "assets/user.png",
+                        image,
                         fit: BoxFit.fitHeight,
+
                       ),
                     ),
                   ),
@@ -78,28 +86,28 @@ class StudentDogTag extends StatelessWidget {
                     ),
                     ...attributes.keys
                         .map((e) => Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Text(
-                              e,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  letterSpacing: 1),
-                            )),
-                        Expanded(
-                            flex: 2,
-                            child: Text(attributes[e],
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                    letterSpacing: 1))),
-                      ],
-                    ))
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      e,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          letterSpacing: 1),
+                                    )),
+                                Expanded(
+                                    flex: 2,
+                                    child: Text(attributes[e],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14,
+                                            letterSpacing: 1))),
+                              ],
+                            ))
                         .toList()
                   ],
                 ),

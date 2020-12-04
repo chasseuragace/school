@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:schoolapp/screens/navigation_wrapper/material_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
+import 'package:schoolapp/template.dart';
 
 import '../../const.dart';
 
@@ -21,38 +23,9 @@ class AppDrawer extends StatelessWidget {
             width: MediaQuery.of(context).size.width * .6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: CircleAvatar(
-                              radius: 35,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            name,
-                            textAlign: TextAlign.center,
-                            style: Constants.titleWhite.copyWith(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                schoolBakgroundNameAndLogo(),
                 SizedBox(
                   height: 10,
                 ),
@@ -60,7 +33,7 @@ class AppDrawer extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
                   child: Text(
-                    DateTime.now().standard(),
+                    NepaliDateTime.now().standard(),
                     style: Constants.title,
                   ),
                 ),
@@ -69,16 +42,15 @@ class AppDrawer extends StatelessWidget {
                   child: Text("Recent Updates",style: Constants.title.copyWith(fontSize: 14),),
                 ),
                 Expanded(
-                  child: true
-                      ?  ListView(
-                    children: [
+                  child: false
+                      ?  FittedBox(
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                   child:noNotifications(context,inDrawer: true)
 
-                      MaterialNotification(date: '',signedBy: '',
-                        compact: true,title: "No notifications yet !",
-                        content: "General notifications will appear here.",),
-                    /*  Center(child: Text("Empty!",
-                        style: Constants.title.copyWith(fontSize: 16,color: Colors.grey[300]),)),*/
-                    ],
+
+
+
                   )
                       : ListView.builder(
                           itemCount: 8,
@@ -91,7 +63,9 @@ class AppDrawer extends StatelessWidget {
                                 onDismissed: (dir) {
                                   //todo mark as read , put user id in notification read array, firebse
                                 },
-                                child: MaterialNotification(compact: true,),
+                                child: MaterialNotification(compact: true,title: "Holiday on Sunday",
+                                  content: "Dear parents, this is to notify : the school"
+                                    " remains closed on Baishakh 2nd 2077 due to unexpected strike.",),
                               ),
                             );
                           },
@@ -112,5 +86,56 @@ class AppDrawer extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Padding schoolBakgroundNameAndLogo() {
+    return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Material(
+                  borderRadius: BorderRadius.circular(12),
+
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(image: AssetImage("assets/intro1.png",),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken))
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: CircleAvatar(
+                                radius: 35,
+                                backgroundColor: Colors.white70,
+                                child: Image.asset(schoolLogo,fit: BoxFit.contain,),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "$name",
+                              textAlign: TextAlign.center,
+                              style: Constants.titleWhite.copyWith(fontSize: 16),
+                            ),
+                            Text(
+                              "$schoolLocationx",
+                              textAlign: TextAlign.center,
+                              style: Constants.titleWhite.copyWith(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
   }
 }
