@@ -42,7 +42,7 @@ Map<dynamic, dynamic> generateExamns() {
             () => [
                   NepaliDateTime.now().standard(),
                   subject,
-                  "10:00 AM-12:00 AM"
+                  "10:00 AM\n12:00 AM"
                 ]);
       });
       examRoutine..putIfAbsent(clasS, () => classroutine);
@@ -73,7 +73,7 @@ class ExamRoutine extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   var examNames = exams.keys.toList();
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical:3.0),
+                    padding: const EdgeInsets.symmetric(vertical:6.0),
                     child: Container(
                       color: Colors.grey.withOpacity((index+1)/2*.08),
                       child: ExpansionTile(
@@ -81,30 +81,40 @@ class ExamRoutine extends StatelessWidget {
                         children: [
                           ...(exams[examNames[index]] as Map<dynamic, dynamic>)
                               .keys
-                              .map((cls) => Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: OpenContainer(
-                                  closedElevation: 0,
-                            openBuilder: (BuildContext context, void Function({Object returnValue}) action) {
-
-                                return ExamDetails(exams: exams, examNames: examNames,index:index,cls: cls,);
-                            },
-                            closedBuilder: (BuildContext context, void Function() action) { return  ListTile(
-                                onTap: (){
-                                  action();
-                                },
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    cls,
-                                    style: Constants.title
-                                        .copyWith(fontSize: 16),
+                              .map((cls) {
+                                String tag =UniqueKey().toString();
+                            return
+                                Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Hero(
+                                    tag:tag,
+                                    child: Material(
+                                      child: ListTile(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(builder: (
+                                                  BuildContext context) {
+                                                return
+                                                  ExamDetails(exams: exams,
+                                                      examNames: examNames,
+                                                      index: index,
+                                                      cls: cls,
+                                                      tag: tag);
+                                              }));
+                                        },
+                                        title: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            cls,
+                                            style: Constants.title
+                                                .copyWith(fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                            );},
-
-                          ),
-                              ))
+                                );
+                          })
                         ],
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

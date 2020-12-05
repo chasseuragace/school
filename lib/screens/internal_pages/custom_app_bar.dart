@@ -19,6 +19,7 @@ class CustomAppBar extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
             onPressed: () {
@@ -29,28 +30,35 @@ class CustomAppBar extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          makeSlideTween(
-            context: context,
-            child: Row(
-              children: [
-                Hero(
-                  tag: tag,
-                  child: applyShade(
-                    child: SizedBox(
-                      height: 30,
-                      width: 40,
-                      child: Image.asset(
-                        "assets/${customAsset??tag}.png",
-                        color: Colors.white,
+          Flexible(
+            child: makeSlideTween(
+              context: context,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Hero(
+                    tag: tag,
+                    child: applyShade(
+                      child: SizedBox(
+                        height: 30,
+                        width: 40,
+                        child: Image.asset(
+                          "assets/${customAsset??tag}.png",
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Text(
-                  title,
-                  style: Constants.title.copyWith(fontSize: 20),
-                ),
-              ],
+                  Flexible(
+                    child: Text(
+                      title,
+                      style: Constants.title.copyWith(fontSize: 20),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],

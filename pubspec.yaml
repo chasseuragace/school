@@ -38,6 +38,7 @@ dependencies:
   animations: ^1.1.2
   nepali_date_picker: ^4.2.0+1
   advance_pdf_viewer: ^1.2.1+1
+  flutter_cached_pdfview: ^0.3.1
 
 dev_dependencies:
   flutter_test:
