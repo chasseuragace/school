@@ -6,7 +6,7 @@ import 'package:schoolapp/screens/internal_pages/custom_app_bar.dart';
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_detail.dart';
 
 import 'package:schoolapp/simple_utils/date_formatter.dart';
-import 'package:schoolapp/simple_utils/widgets.dart';
+
 
 Map<dynamic, dynamic> generateExamns() {
   var examNames = [
@@ -56,7 +56,7 @@ Map<dynamic, dynamic> generateExamns() {
 
 class ExamRoutine extends StatelessWidget {
   static const String tag = "exam";
-  ValueNotifier<String> selectedExam = ValueNotifier<String>("");
+  final ValueNotifier<String> selectedExam = ValueNotifier<String>("");
 
   @override
   Widget build(BuildContext context) {

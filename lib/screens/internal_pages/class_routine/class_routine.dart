@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/internal_pages/custom_app_bar.dart';
-import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
+
 import 'package:schoolapp/screens/internal_pages/exam_routine/heading.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
