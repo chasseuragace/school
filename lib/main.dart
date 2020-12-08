@@ -6,7 +6,7 @@ import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dar
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
 import 'package:schoolapp/screens/internal_pages/homework/homework.dart';
 import 'package:schoolapp/screens/internal_pages/results/exam_results.dart';
-
+import 'package:schoolapp/screens/internal_pages/suggestion/sgegstion.dart';
 import 'package:schoolapp/screens/intro/walkthrough.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
 import 'package:schoolapp/screens/login/loginwrapper.dart';
@@ -51,12 +51,13 @@ class MyApp extends StatelessWidget {
                 ? Walkthrough()
                 : LoginWrapper(),
         routes: {
-          Attendance.tag: (context) => Attendance(),
-          ClassRoutine.tag: (context) => ClassRoutine(),
-          ExamRoutine.tag: (context) => ExamRoutine(),
-          ExamResults.tag: (context) => ExamResults(),
-          Homework.tag: (context) => Homework(),
-        },
+            Attendance.tag: (context) => Attendance(),
+            ClassRoutine.tag: (context) => ClassRoutine(),
+            ExamRoutine.tag: (context) => ExamRoutine(),
+            ExamResults.tag: (context) => ExamResults(),
+            Homework.tag: (context) => Homework(),
+            Suggestion.tag: (context) => Suggestion(),
+          },
         );
       },
     );
