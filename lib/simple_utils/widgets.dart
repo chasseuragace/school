@@ -241,6 +241,7 @@ Column statsInChart(BuildContext context,
     ],
   );
 }
+
 Widget appButton({@required String text,@required Function() onTap, bool small=false, Color color}){
  return MaterialButton(
     elevation: 1, focusElevation: 1,

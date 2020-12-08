@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage>
         children: [
           makeSlideTween(
         context: context,
-        child: StudentDogTag(name: studentName, attributes: studentDogTagAttributes,image: studentImage,),
+        child: StudentDogTag(name: studentName, attributes: studentDogTagAttributes,image: studentImage,mini: true,),
       ),
       SizedBox(
             height: 10,

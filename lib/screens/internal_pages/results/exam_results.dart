@@ -34,22 +34,20 @@ class ExamResults extends StatelessWidget {
                     final tag= generateExamNames()[index]+'$index';
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Container(
-                        color: Colors.grey.withOpacity((index + 1) / 2 * .08),
-                        child: Hero(
-                          tag: tag,
-                          child: Material(
-                            child: ListTile(
-                              title: Text(generateExamNames()[index]),
-                              onTap: () async {
-                               await setOrientation(context);
-                                await Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (c) {
-                                  return ViewResults(title:generateExamNames()[index],tag:tag);
-                                }));
-                                resetOrientation();
-                              },
-                            ),
+                      child: Hero(
+                        tag: tag,
+                        child: Material(
+                          color: Colors.grey.withOpacity((index + 1) / 2 * .08),
+                          child: ListTile(
+                            title: Text(generateExamNames()[index]),
+                            onTap: () async {
+                             await setOrientation(context);
+                              await Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (c) {
+                                return ViewResults(title:generateExamNames()[index],tag:tag);
+                              }));
+                              resetOrientation();
+                            },
                           ),
                         ),
                       ),

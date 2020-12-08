@@ -28,14 +28,11 @@ class ExamDetails extends StatelessWidget {
             makeScaleTween(context: context,child: Image.asset('assets/examImg.png',fit: BoxFit.contain,)),),
 
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal:8.0),
-              child: ColoredBox(
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical:8.0),
-                  child: const Heading(headings: ["Date", 'Subject','Time'],),
-                ),
+            ColoredBox(
+              color: Colors.grey[200],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical:8.0),
+                child: const Heading(headings: ["Date", 'Subject','Time'],),
               ),
             ),
           Expanded(flex: 1,child: ListView(
@@ -69,11 +66,16 @@ class ExamDetails extends StatelessWidget {
                               dynamic>)
                               .map((e) =>
                               Flexible(
-                                  child: Text(
-                                    e,
-                                    textAlign:
-                                    TextAlign
-                                        .center,
+                                  child:  SizedBox(
+                                    width:  (MediaQuery.of(context).size.width*.8)/3,
+                                    child:Center(
+                                      child: Text(
+                                        e,
+                                        textAlign:
+                                        TextAlign
+                                            .center,
+                                      ),
+                                    ),
                                   )))
                         ],
                       ),

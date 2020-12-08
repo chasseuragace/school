@@ -8,20 +8,24 @@ class StudentDogTag extends StatelessWidget {
     @required this.name,
     @required this.attributes,
     @required this.image,
+    this.mini=false,
+
   }) : super(key: key);
 
   final String name;
+  final bool mini;
   final String image;
   final Map<String, String> attributes;
-  final height = 135.0;
-
+  final normalHeight = 135.0;
+  final smallHeight = 50.0;
+double get  height => mini?smallHeight:normalHeight;
   @override
   Widget build(BuildContext context) {
-    var widthOfImageHolder = MediaQuery.of(context).size.width * .35;
+    var widthOfImageHolder = MediaQuery.of(context).size.width *( mini ? .25 :.35);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: height,
+        height:height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(colors: [
@@ -41,7 +45,12 @@ class StudentDogTag extends StatelessWidget {
               alignment: Alignment.center,
               width: widthOfImageHolder,
               height: height,
-              child: Padding(
+              child: mini? CircleAvatar(backgroundImage:  AssetImage(
+                image,
+
+
+              ),):
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
                   elevation: 1,
@@ -84,7 +93,7 @@ class StudentDogTag extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ...attributes.keys
+                   if(!mini) ...attributes.keys
                         .map((e) => Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [

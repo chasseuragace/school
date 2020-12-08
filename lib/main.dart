@@ -4,6 +4,7 @@ import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/internal_pages/attendance/attendance.dart';
 import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dart';
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
+import 'package:schoolapp/screens/internal_pages/homework/homework.dart';
 import 'package:schoolapp/screens/internal_pages/results/exam_results.dart';
 
 import 'package:schoolapp/screens/intro/walkthrough.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           ClassRoutine.tag: (context) => ClassRoutine(),
           ExamRoutine.tag: (context) => ExamRoutine(),
           ExamResults.tag: (context) => ExamResults(),
+          Homework.tag: (context) => Homework(),
         },
         );
       },

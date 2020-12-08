@@ -64,7 +64,10 @@ class _ClassRoutineState extends State<ClassRoutine> {
           children: [
             CustomAppBar(tag: ClassRoutine.tag, title: "Class Routine"),
             _daysScroll(),
-            Heading(headings: ['Time',"Subject","Teacher"],),
+            ColoredBox(color: Colors.grey[300],child: Padding(
+              padding: const EdgeInsets.symmetric(vertical:8.0),
+              child: Heading(headings: ['Time',"Subject","Teacher"],),
+            )),
             Expanded(
               flex: 1,
               child: PageView.builder(
