@@ -15,7 +15,6 @@ class MaterialNotification extends StatelessWidget {
   final Function(dynamic) onTap;
   final String signedBy;
   final String date;
-  
   final bool compact;
   const MaterialNotification({
     Key key, this.image,
