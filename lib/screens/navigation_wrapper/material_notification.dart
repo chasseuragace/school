@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
+
 import '../../const.dart';
 
 class MaterialNotification extends StatelessWidget {
@@ -14,6 +15,7 @@ class MaterialNotification extends StatelessWidget {
   final Function(dynamic) onTap;
   final String signedBy;
   final String date;
+  
   final bool compact;
   const MaterialNotification({
     Key key, this.image,
