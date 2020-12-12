@@ -8,8 +8,7 @@ class StudentDogTag extends StatelessWidget {
     @required this.name,
     @required this.attributes,
     @required this.image,
-    this.mini=false,
-
+    this.mini = false,
   }) : super(key: key);
 
   final String name;
@@ -17,15 +16,18 @@ class StudentDogTag extends StatelessWidget {
   final String image;
   final Map<String, String> attributes;
   final normalHeight = 135.0;
-  final smallHeight = 50.0;
-double get  height => mini?smallHeight:normalHeight;
+  final smallHeight = 70.0;
+
+  double get height => mini ? smallHeight : normalHeight;
+
   @override
   Widget build(BuildContext context) {
-    var widthOfImageHolder = MediaQuery.of(context).size.width *( mini ? .25 :.35);
+    var widthOfImageHolder =
+        MediaQuery.of(context).size.width * (mini ? .25 : .35);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height:height,
+        height: height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(colors: [
@@ -45,11 +47,11 @@ double get  height => mini?smallHeight:normalHeight;
               alignment: Alignment.center,
               width: widthOfImageHolder,
               height: height,
-              child: mini? CircleAvatar(backgroundImage:  AssetImage(
+              child: mini ? CircleAvatar(backgroundImage: AssetImage(
                 image,
 
 
-              ),):
+              ), radius: 30,) :
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
@@ -93,31 +95,34 @@ double get  height => mini?smallHeight:normalHeight;
                         ),
                       ),
                     ),
-                   if(!mini) ...attributes.keys
-                        .map((e) => Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      e,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 14,
+
+
+                    ...attributes.keys
+                        .map((e) =>
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: Text(
+                                  e,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 14,
                                           color: Colors.white,
                                           letterSpacing: 1),
                                     )),
-                                Expanded(
-                                    flex: 2,
-                                    child: Text(attributes[e],
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14,
-                                            letterSpacing: 1))),
-                              ],
-                            ))
-                        .toList()
+                            Expanded(
+                                flex: 2,
+                                child: Text(attributes[e],
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        letterSpacing: 1))),
+                          ],
+                        ))
+                        .toList().take(mini ? 2 : attributes.length)
                   ],
                 ),
               ),

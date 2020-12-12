@@ -19,10 +19,9 @@ class _HomePageWrapperState extends State<HomePageWrapper>
     with SingleTickerProviderStateMixin {
   AnimationController animController;
   Animation<double> scale;
-  Animation<double> scaleReverce;
+  Animation<double> scaleReverse;
   Animation<Offset> slide;
   PageController _pageController;
-
 
   @override
   void initState() {
@@ -48,9 +47,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
       },
       child: Stack(
         children: [
-          //drawer background filter
           drawer(),
-          //dashboard page
           AnimatedBuilder(
             animation: animController,
             builder: (c, child) {
@@ -114,23 +111,14 @@ class _HomePageWrapperState extends State<HomePageWrapper>
   }
 
   Widget pageContent() {
-    return Column(
+    return PageView(
+      physics: NeverScrollableScrollPhysics(),
+      controller: _pageController,
       children: [
-        Expanded(
-          flex: 1,
-          child: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: [
-              HomePage(),
-              NotificationsPage(),
-              CalenderPage(
-
-              ),
-             Profile(),
-            ],
-          ),
-        )
+        HomePage(),
+        NotificationsPage(),
+        CalenderPage(),
+        Profile(),
       ],
     );
   }
@@ -147,52 +135,38 @@ class _HomePageWrapperState extends State<HomePageWrapper>
     return AppBar(
       elevation: 0,
       centerTitle: true,
-      /*  title: SizedBox(
-          width: (MediaQuery.of(context).size.width - 50) * .8,
-          child: Text(
-            "Very Long School name School Name",
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: Constants.title.copyWith(letterSpacing: 1, fontSize: 20),
-          )),*/
-      leading: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () {
-              animController.status == AnimationStatus.completed
-                  ? animController.reverse()
-                  : animController.forward();
-            },
-            icon: SizedBox(
-                width: 22,
-                height: 50,
-                child: FittedBox(fit: BoxFit.contain, child: menu())),
-          ),
-        ],
+      leading: IconButton(
+        onPressed: () {
+          animController.status == AnimationStatus.completed
+              ? animController.reverse()
+              : animController.forward();
+        },
+        icon: SizedBox(
+            width: 22,
+            height: 50,
+            child: FittedBox(fit: BoxFit.contain, child: menu())),
       ),
     );
   }
 
   Widget drawer() {
-
     return Material(
       child: SafeArea(
         child: Container(
           color: Colors.white,
           width: MediaQuery.of(context).size.width,
           child: AnimatedBuilder(
-            builder: (BuildContext context,  Widget child) {
-             return ScaleTransition(
-               scale: scaleReverce,
-               child: child,
-             );
+            builder: (BuildContext context, Widget child) {
+              return ScaleTransition(
+                scale: scaleReverse,
+                child: child,
+              );
             },
             child: Align(
               alignment: Alignment.topLeft,
-              child: AppDrawer(name:schoolName),
-            ),  animation: scale,
+              child: AppDrawer(name: schoolName),
+            ),
+            animation: scale,
           ),
         ),
       ),
@@ -233,7 +207,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
             CurvedAnimation(parent: animController, curve: Curves.easeInExpo));
     scale = Tween<double>(end: .8, begin: 1.0).animate(
         CurvedAnimation(parent: animController, curve: Curves.easeOutExpo));
-    scaleReverce = Tween<double>(end: 1, begin: .6).animate(
+    scaleReverse = Tween<double>(end: 1, begin: .6).animate(
         CurvedAnimation(parent: animController, curve: Curves.easeInCubic));
   }
 }

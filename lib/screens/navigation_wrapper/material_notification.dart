@@ -18,6 +18,24 @@ class MaterialNotification extends StatelessWidget {
   final String signedBy;
   final String date;
   final bool compact;
+  final bool asProject;
+
+  const MaterialNotification.deadline(
+      {Key key,
+      this.image,
+      this.title = "Notice",
+      this.content = "",
+      this.signedBy = "Deadline",
+      this.date = "",
+      this.focused = false,
+      this.compact = false,
+      this.onTap,
+      this.id,
+      this.alert = false,
+      this.asArticle = false,
+      this.useHero,
+      this.asProject = true})
+      : super(key: key);
 
   const MaterialNotification({
     Key key,
@@ -33,6 +51,7 @@ class MaterialNotification extends StatelessWidget {
     this.alert = false,
     this.asArticle = false,
     this.useHero,
+    this.asProject = false,
   }) : super(key: key);
 
   @override
@@ -111,7 +130,7 @@ class MaterialNotification extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "-$signedBy",
+                  "${asProject ? '-' : ''}$signedBy",
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 Text(

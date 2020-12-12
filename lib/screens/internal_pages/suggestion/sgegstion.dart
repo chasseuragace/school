@@ -65,7 +65,7 @@ class Suggestion extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              hintText: "Eg. Inquiry on Bus Schedule",
+                              hintText: "Any queries or suggestions",
                               labelText: "Subject",
                               labelStyle:
                                   Constants.title.copyWith(fontSize: 16),
@@ -98,7 +98,7 @@ class Suggestion extends StatelessWidget {
                               focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(4),
                                   borderSide: BorderSide(color: Colors.green)),
-                              hintText: "Any queries or suggestions",
+                              hintText: "Details",
                             ),
                           ),
                         ),

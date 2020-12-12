@@ -1,13 +1,11 @@
 
-import 'package:schoolapp/screens/homepage/home_page_tile.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/homepage/dog_tag_widget.dart';
+import 'package:schoolapp/screens/homepage/home_page_tile.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
 import 'package:schoolapp/template.dart';
 
@@ -51,7 +49,6 @@ class _HomePageState extends State<HomePage>
                 },
                 child: DashBoardTile(tileTitle: e,assetImage: tiles[e],
                 onTap :(){
-                  print("$e");
                    Navigator.of(context).pushNamed('${tiles[e]}');
                     }
                 ),

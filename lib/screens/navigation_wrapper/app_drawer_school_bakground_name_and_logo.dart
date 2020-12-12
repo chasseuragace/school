@@ -6,10 +6,15 @@ import '../../template.dart';
 class AppDrawerSchoolBakgroundNameAndLogo extends StatelessWidget {
   const AppDrawerSchoolBakgroundNameAndLogo({
     Key key,
-    @required this.name,
+    @required this.name, @required this.location, @required this.backgroundImageUrl, @required this.schoolLogoUrl,
+
   }) : super(key: key);
 
   final String name;
+  final String location;
+  final String backgroundImageUrl;
+  final String schoolLogoUrl;
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,7 @@ class AppDrawerSchoolBakgroundNameAndLogo extends StatelessWidget {
                           style: Constants.titleWhite.copyWith(fontSize: 16),
                         ),
                         Text(
-                          "$schoolLocationx",
+                          "$location",
                           textAlign: TextAlign.center,
                           style: Constants.titleWhite.copyWith(fontSize: 14),
                         ),

@@ -4,8 +4,6 @@ import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dar
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
 import 'package:schoolapp/screens/internal_pages/results/exam_results.dart';
 
-
-
 import 'const.dart';
 
 const schoolName ="Shree Janata Purbanchal Madhyamik Bidhalaya";
@@ -14,9 +12,9 @@ const studentName = "Thomas Shelby";
 const studentImage = "assets/user.png";
 const schoolLogo= "assets/dofo.png";
 const studentDogTagAttributes =  {
-  "DOB": "Jan 27, 2008",
   "Class": "SIxteen",
   "Section": "Stone Cold",
+  "DOB": "Jan 27, 2008",
   "Rank": "12",
 };
 const tiles = {
@@ -25,15 +23,16 @@ const tiles = {
   "Exam Routine": ExamRoutine.tag,
   "Daily Homework": "homework",
   "Results": ExamResults.tag,
+  "Subjects": "subjects",
   "Project Work": "project",
   "Library": "library",
+  "Articles": "article",
+  "Events": "events",
+  "Due Dates": "due",
   "Suggestions": "suggestions",
   "School Details": "about",
   "Language ": "language",
-  "Due Dates": "due",
-  "Subjects": "subjects",
-  "Events": "events",
-  "Articles": "article",
+
 };
 
 noNotifications(context, {bool inDrawer=false})=>    Column(

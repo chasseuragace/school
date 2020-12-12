@@ -8,6 +8,7 @@ import 'package:schoolapp/screens/internal_pages/events/events.dart';
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
 import 'package:schoolapp/screens/internal_pages/homework/homework.dart';
 import 'package:schoolapp/screens/internal_pages/library/library.dart';
+import 'package:schoolapp/screens/internal_pages/project_work/project_work.dart';
 import 'package:schoolapp/screens/internal_pages/results/exam_results.dart';
 import 'package:schoolapp/screens/internal_pages/school_details/school_details.dart';
 import 'package:schoolapp/screens/internal_pages/subjects/subjects.dart';
@@ -33,7 +34,7 @@ void main() async {
           create: (_) => LoginManger(),
         )
       ],
-      child: ScrollConfiguration(behavior: NoGlow(),child: MyApp()),
+      child: MyApp(),
     ),
   );
 }
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
             Library.tag: (context) => Library(),
             Events.tag: (context) => Events(),
             SchoolDetails.tag: (context) => SchoolDetails(),
+            ProjectWork.tag: (context) => ProjectWork(),
           },
         );
       },
