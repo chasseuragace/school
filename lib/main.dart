@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schoolapp/const.dart';
+import 'package:schoolapp/screens/internal_pages/articles/articles.dart';
 import 'package:schoolapp/screens/internal_pages/attendance/attendance.dart';
 import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dart';
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
 import 'package:schoolapp/screens/internal_pages/homework/homework.dart';
 import 'package:schoolapp/screens/internal_pages/results/exam_results.dart';
+import 'package:schoolapp/screens/internal_pages/subjects/subjects.dart';
 import 'package:schoolapp/screens/internal_pages/suggestion/sgegstion.dart';
 import 'package:schoolapp/screens/intro/walkthrough.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
@@ -57,6 +59,8 @@ class MyApp extends StatelessWidget {
             ExamResults.tag: (context) => ExamResults(),
             Homework.tag: (context) => Homework(),
             Suggestion.tag: (context) => Suggestion(),
+            Subjects.tag: (context) => Subjects(),
+            Articles.tag: (context) => Articles(),
           },
         );
       },

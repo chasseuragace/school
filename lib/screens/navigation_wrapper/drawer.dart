@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
-import 'package:schoolapp/screens/navigation_wrapper/material_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
+import 'package:schoolapp/screens/navigation_wrapper/material_notification.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
 import 'package:schoolapp/template.dart';
 
@@ -32,9 +32,12 @@ class AppDrawer extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
-                  child: Text(
-                    NepaliDateTime.now().standard(),
-                    style: Constants.title,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      NepaliDateTime.now().standard(),
+                      style: Constants.title,
+                    ),
                   ),
                 ),
                 Padding(

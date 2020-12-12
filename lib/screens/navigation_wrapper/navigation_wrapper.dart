@@ -59,55 +59,53 @@ class _HomePageWrapperState extends State<HomePageWrapper>
             builder: (c, child) {
               return drawerTransition(child);
             },
-            child: Scaffold(
-              appBar: buildAppBar(),
-              body: GestureDetector(
+            child: Material(
+              child: GestureDetector(
                 onHorizontalDragUpdate: drawerSwipeHandler,
-                child: SafeArea(
-                  child: Container(
-                    height: height(context),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: ValueListenableBuilder(
-                            valueListenable: isTouchable,
-                            builder: (BuildContext context,
-                                bool isDashboardTouchable, Widget child) {
-                              return Stack(
-                                children: [
-                                  child,
-                                  if (!isDashboardTouchable) untouchableFilter()
-                                ],
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                child: Container(
+                  //height: height(context),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      buildAppBar(),
+                      Expanded(
+                        flex: 1,
+                        child: ValueListenableBuilder(
+                          valueListenable: isTouchable,
+                          builder: (BuildContext context,
+                              bool isDashboardTouchable, Widget child) {
+                            return Stack(
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: pageContent(),
-                                ),
+                                child,
+                                if (!isDashboardTouchable) untouchableFilter()
                               ],
-                            ),
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: pageContent(),
+                              ),
+                            ],
                           ),
                         ),
-                        CustomBottomNavigation(
-                          selectedItemColor: Colors.white,
-                          navItems: {
-                            "Home": Icons.home,
-                            "Notification": Icons.notifications,
-                            "Calendar": Icons.calendar_today,
-                            "Profile": Icons.person,
-                          },
-                          onTabChange: (page) {
-                            _pageController.jumpToPage(page);
-                          },
-                        )
-                      ],
-                    ),
+                      ),
+                      CustomBottomNavigation(
+                        selectedItemColor: Colors.white,
+                        navItems: {
+                          "Home": Icons.home,
+                          "Notification": Icons.notifications,
+                          "Calendar": Icons.calendar_today,
+                          "Profile": Icons.person,
+                        },
+                        onTabChange: (page) {
+                          _pageController.jumpToPage(page);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -78,105 +78,108 @@ class _RecoveryNumberWidget extends StatefulWidget {
 }
 
 class __RecoveryNumberWidgetState extends State<_RecoveryNumberWidget> {
-  final _key = GlobalKey<FormState>();
   bool isShowingSend = false;
   final ResetPasswordManger manager = ResetPasswordManger();
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _key,
-      child: Container(
-        height: 80,
-        color: Colors.grey.withOpacity(.26),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  maxLength: 10,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textAlign: TextAlign.center,
-                  style: Theme
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: 80,
+      ),
+
+      color: Colors.grey.withOpacity(.26),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                maxLength: 10,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                textAlign: TextAlign.center,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline4,
+                keyboardType: TextInputType.phone,
+                onChanged: (s) {
+                  if (s
+                      .trim()
+                      .length == 10 && !isShowingSend) {
+                    setState(() {
+                      isShowingSend = true;
+                    });
+                  }
+                  else if (isShowingSend && s
+                      .trim()
+                      .length != 10) {
+                    setState(() {
+                      isShowingSend = false;
+                    });
+                  }
+                },
+
+                decoration: InputDecoration(
+                  helperMaxLines: 2,
+                  helperText: "You'll be informed after verification.",
+                  hintStyle: Theme
                       .of(context)
                       .textTheme
-                      .headline4,
-                  keyboardType: TextInputType.phone,
-                  onChanged: (s) {
-                    if (s
-                        .trim()
-                        .length == 10 && !isShowingSend) {
-                      setState(() {
-                        isShowingSend = true;
-                      });
-                    }
-                    else if (isShowingSend && s
-                        .trim()
-                        .length != 10) {
-                      setState(() {
-                        isShowingSend = false;
-                      });
-                    }
-                  },
-
-                  decoration: InputDecoration(
-                    helperText: "You'll be informed after verification.",
-                    hintStyle: Theme
-                        .of(context)
-                        .textTheme
-                        .headline6.copyWith(color: Colors.grey),
-                    border: InputBorder.none,
-                    hintText: "Enter your Phone no.",
-                  ),
+                      .headline6
+                      .copyWith(color: Colors.grey),
+                  border: InputBorder.none,
+                  hintText: "Enter your Phone no.",
                 ),
               ),
             ),
-            if(isShowingSend) ValueListenableBuilder<ResetStates>(
-                valueListenable: manager.currentStates,
-                builder: (context, value, child) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:18.0),
-                    child: AnimatedSwitcher(
-                      duration: Duration(milliseconds: 200),
-                      child: value == ResetStates.loading
-                          ? box(child: CircularProgressIndicator())
-                          :
-                      value == ResetStates.success ?
-                      box(child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.check, size: 25, color: Constants.lightAccent,),
-                          Text("Sent",style: TextStyle(color: Constants.lightAccent,fontSize: 16,),),
-                        ],
-                      ))
-                          :
-                      box(
-                        child: SizedBox.expand(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: TextButton(
-                              onPressed: () async {
-                                 FocusScope.of(context).unfocus();
-                                manager.requestResetCode();
-                              },
-                              child: Text(
-                                "Send",
-                                style: Constants.title,
-                              ),
+          ),
+          if(isShowingSend) ValueListenableBuilder<ResetStates>(
+              valueListenable: manager.currentStates,
+              builder: (context, value, child) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 200),
+                    child: value == ResetStates.loading
+                        ? box(child: CircularProgressIndicator())
+                        :
+                    value == ResetStates.success ?
+                    box(child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.check, size: 25, color: Constants.lightAccent,),
+                        Text("Sent", style: TextStyle(
+                          color: Constants.lightAccent, fontSize: 16,),),
+                      ],
+                    ))
+                        :
+                    box(
+                      child: SizedBox.expand(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: TextButton(
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              manager.requestResetCode();
+                            },
+                            child: Text(
+                              "Send",
+                              style: Constants.title,
                             ),
                           ),
                         ),
                       ),
                     ),
-                  );
-                }
-            ),
+                  ),
+                );
+              }
+          ),
 
-          ],
-        ),
+        ],
       ),
     );
   }
