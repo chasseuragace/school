@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolapp/screens/calendar/calander.dart';
-
-
 import 'package:schoolapp/screens/homepage/homepage.dart';
-
 import 'package:schoolapp/screens/navigation_wrapper/drawer.dart';
 import 'package:schoolapp/screens/notification/notifications.dart';
 import 'package:schoolapp/screens/profile/profile.dart';

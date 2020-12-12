@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/internal_pages/custom_app_bar.dart';
 
 class Subjects extends StatelessWidget {
@@ -21,7 +22,7 @@ class Subjects extends StatelessWidget {
                           title: Text(e),
                           subtitle: Text(generateSubjects()[e]),
                           onTap: () {},
-                          tileColor: Colors.grey[200],
+                          tileColor: Constants.tilesColor,
                         ),
                       ))
                 ],

@@ -4,9 +4,12 @@ import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/internal_pages/articles/articles.dart';
 import 'package:schoolapp/screens/internal_pages/attendance/attendance.dart';
 import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dart';
+import 'package:schoolapp/screens/internal_pages/events/events.dart';
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
 import 'package:schoolapp/screens/internal_pages/homework/homework.dart';
+import 'package:schoolapp/screens/internal_pages/library/library.dart';
 import 'package:schoolapp/screens/internal_pages/results/exam_results.dart';
+import 'package:schoolapp/screens/internal_pages/school_details/school_details.dart';
 import 'package:schoolapp/screens/internal_pages/subjects/subjects.dart';
 import 'package:schoolapp/screens/internal_pages/suggestion/sgegstion.dart';
 import 'package:schoolapp/screens/intro/walkthrough.dart';
@@ -41,18 +44,18 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (BuildContext context, ThemeProvider appProvider, Widget child) {
         return MaterialApp(
-            key: appProvider.key,
-            debugShowCheckedModeBanner: false,
-            navigatorKey: appProvider.navigatorKey,
-            title: Constants.appName,
-            theme: appProvider.theme,
-            darkTheme: Constants.darkTheme,
-            home:
-            // TestWidget()
-            !LocalStorage.shouldSkipIntro
-                ? Walkthrough()
-                : LoginWrapper(),
-        routes: {
+          key: appProvider.key,
+          debugShowCheckedModeBanner: false,
+          navigatorKey: appProvider.navigatorKey,
+          title: Constants.appName,
+          theme: appProvider.theme,
+          darkTheme: Constants.darkTheme,
+          home:
+          // TestWidget()
+          !LocalStorage.shouldSkipIntro
+              ? Walkthrough()
+              : LoginWrapper(),
+          routes: {
             Attendance.tag: (context) => Attendance(),
             ClassRoutine.tag: (context) => ClassRoutine(),
             ExamRoutine.tag: (context) => ExamRoutine(),
@@ -61,6 +64,9 @@ class MyApp extends StatelessWidget {
             Suggestion.tag: (context) => Suggestion(),
             Subjects.tag: (context) => Subjects(),
             Articles.tag: (context) => Articles(),
+            Library.tag: (context) => Library(),
+            Events.tag: (context) => Events(),
+            SchoolDetails.tag: (context) => SchoolDetails(),
           },
         );
       },
