@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/internal_pages/articles/articles.dart';
 import 'package:schoolapp/screens/internal_pages/attendance/attendance.dart';
+import 'package:schoolapp/screens/internal_pages/bus_details/bus_details.dart';
 import 'package:schoolapp/screens/internal_pages/class_routine/class_routine.dart';
+import 'package:schoolapp/screens/internal_pages/due_details/due_details.dart';
 import 'package:schoolapp/screens/internal_pages/events/events.dart';
 import 'package:schoolapp/screens/internal_pages/exam_routine/exam_routine.dart';
 import 'package:schoolapp/screens/internal_pages/homework/homework.dart';
@@ -17,7 +19,6 @@ import 'package:schoolapp/screens/intro/walkthrough.dart';
 import 'package:schoolapp/screens/login/login_manager.dart';
 import 'package:schoolapp/screens/login/loginwrapper.dart';
 import 'package:schoolapp/services/shared_prefrernces/shared_pref.dart';
-import 'package:schoolapp/simple_utils/ui_modifiers.dart';
 import 'package:schoolapp/theme/theme_provider.dart';
 
 void main() async {
@@ -69,6 +70,8 @@ class MyApp extends StatelessWidget {
             Events.tag: (context) => Events(),
             SchoolDetails.tag: (context) => SchoolDetails(),
             ProjectWork.tag: (context) => ProjectWork(),
+            DueDetails.tag: (context) => DueDetails(),
+            BusDetails.tag: (context) => BusDetails(),
           },
         );
       },

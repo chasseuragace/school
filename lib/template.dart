@@ -28,11 +28,11 @@ const tiles = {
   "Library": "library",
   "Articles": "article",
   "Events": "events",
-  "Due Dates": "due",
+  "Due Details": "due",
   "Suggestions": "suggestions",
   "School Details": "about",
   "Language ": "language",
-
+  "Bus Details ": "bus",
 };
 
 noNotifications(context, {bool inDrawer=false})=>    Column(

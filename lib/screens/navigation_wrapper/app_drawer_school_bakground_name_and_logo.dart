@@ -6,8 +6,10 @@ import '../../template.dart';
 class AppDrawerSchoolBakgroundNameAndLogo extends StatelessWidget {
   const AppDrawerSchoolBakgroundNameAndLogo({
     Key key,
-    @required this.name, @required this.location, @required this.backgroundImageUrl, @required this.schoolLogoUrl,
-
+    @required this.name,
+    @required this.location = schoolLocationx,
+    @required this.backgroundImageUrl,
+    @required this.schoolLogoUrl,
   }) : super(key: key);
 
   final String name;
