@@ -4,7 +4,7 @@ import 'package:schoolapp/screens/calendar/calander.dart';
 import 'package:schoolapp/screens/homepage/homepage.dart';
 import 'package:schoolapp/screens/navigation_wrapper/drawer.dart';
 import 'package:schoolapp/screens/notification/notifications.dart';
-import 'package:schoolapp/screens/profile/profile.dart';
+import 'package:schoolapp/screens/profile/profile_wrapper.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
 import 'package:schoolapp/template.dart';
 
@@ -118,7 +118,7 @@ class _HomePageWrapperState extends State<HomePageWrapper>
         HomePage(),
         NotificationsPage(),
         CalenderPage(),
-        Profile(),
+        ProfileWrapper(),
       ],
     );
   }

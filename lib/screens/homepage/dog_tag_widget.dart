@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:schoolapp/const.dart';
-
+import 'package:schoolapp/screens/profile/profile_manager.dart';
 
 class StudentDogTag extends StatelessWidget {
   const StudentDogTag({
     Key key,
-    @required this.name,
-    @required this.attributes,
-    @required this.image,
     this.mini = false,
+    this.profile,
   }) : super(key: key);
 
-  final String name;
   final bool mini;
-  final String image;
-  final Map<String, String> attributes;
+
+  final Profile profile;
   final normalHeight = 135.0;
   final smallHeight = 70.0;
 
   double get height => mini ? smallHeight : normalHeight;
+
+  get attributes => {
+        "Class": profile.className,
+        "DOB": profile.dob,
+        "Address ": profile.currentAddress,
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +50,30 @@ class StudentDogTag extends StatelessWidget {
               alignment: Alignment.center,
               width: widthOfImageHolder,
               height: height,
-              child: mini ? CircleAvatar(backgroundImage: AssetImage(
-                image,
-
-
-              ), radius: 30,) :
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  elevation: 1,
-                  color: Constants.lightAccent.withOpacity(.3),
-                  borderRadius: BorderRadius.circular(widthOfImageHolder),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(widthOfImageHolder),
-                    child: SizedBox(
-                      width: 120 - 16.0,
-                      height: 120 - 16.0,
-                      child: Image.asset(
-                        image,
-                        fit: BoxFit.fitHeight,
-
+              child: mini
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://initialstechnology.com/schoolapp/public/${profile.studentPhoto}',
                       ),
-                    ),
+                      radius: 30,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                        elevation: 1,
+                        color: Constants.lightAccent.withOpacity(.3),
+                        borderRadius: BorderRadius.circular(widthOfImageHolder),
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(widthOfImageHolder),
+                          child: SizedBox(
+                            width: 120 - 16.0,
+                            height: 120 - 16.0,
+                            child: Image.network(
+                              'https://initialstechnology.com/schoolapp/public/${profile.studentPhoto}',
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -86,7 +91,7 @@ class StudentDogTag extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 5.0),
                         child: Text(
-                          "$name",
+                          "${profile.studentName}",
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
@@ -95,20 +100,17 @@ class StudentDogTag extends StatelessWidget {
                         ),
                       ),
                     ),
-
-
                     ...attributes.keys
-                        .map((e) =>
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: Text(
-                                  e,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 14,
+                        .map((e) => Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      e,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 14,
                                           color: Colors.white,
                                           letterSpacing: 1),
                                     )),

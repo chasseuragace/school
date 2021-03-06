@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/internal_pages/custom_app_bar.dart';
+import 'package:schoolapp/screens/login/login_manager.dart';
+import 'package:schoolapp/services/shared_prefrernces/shared_pref.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
 
 class Suggestion extends StatelessWidget {
@@ -123,7 +125,21 @@ class Suggestion extends StatelessWidget {
 
   proceedToSubmit(context) {
     FocusScope.of(context).unfocus();
-
-    Navigator.of(context).pop();
+    UserAuthentication.postTo(
+        url: UserAuthentication.submitFeedBack,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${LocalStorage.accessToken}'
+        },
+        fields: {
+          "subject": _subjectController.text,
+          'details': _contentController.text
+        },
+        onError: (errmsg) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('vayena')));
+        },
+        onSuccess: (decodedData) async {});
   }
 }
+

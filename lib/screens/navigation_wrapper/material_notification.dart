@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nepali_date_picker/nepali_date_picker.dart';
-import 'package:schoolapp/simple_utils/date_formatter.dart';
 
 import '../../const.dart';
 
@@ -134,7 +132,7 @@ class MaterialNotification extends StatelessWidget {
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 Text(
-                  NepaliDateTime.now().standard(),
+                  date,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:schoolapp/const.dart';
+import 'package:schoolapp/screens/internal_pages/due_details/due_details_controller.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
+
 import '../custom_app_bar.dart';
 
 class DueDetails extends StatelessWidget {
@@ -44,9 +46,12 @@ class DueDetails extends StatelessWidget {
                     "Total",
                     style: Constants.title.copyWith(fontSize: 16),
                   ),
-                  Text(
-                    '${dueDetails['total']}',
-                    style: Constants.title.copyWith(fontSize: 16),
+                  dueDetailsManager.mamage(
+                    error: (s) => Text('error'),
+                    loaded: (dd) => Text(
+                      '${dd.totalDue}',
+                      style: Constants.title.copyWith(fontSize: 16),
+                    ),
                   )
                 ],
               ),
@@ -60,21 +65,28 @@ class DueDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Previous Remaining'),
-                  Text('${dueDetails['previous_remaining']['remaining']}'),
+                  dueDetailsManager.mamage(
+                    error: (s) => Text('error'),
+                    loaded: (dd) => Text('${dd.previousDue}'),
+                  )
                 ],
               ),
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Deadline'),
-                  Text('${dueDetails['previous_remaining']['deadline']}')
+                  dueDetailsManager.mamage(
+                    error: (s) => Text('error'),
+                    loaded: (dd) => Text(
+                        '${DateTime.parse(dd.deadline).toNepaliDateTime().standard()}'),
+                  )
                 ],
               ),
             ),
             SizedBox(
               height: 15,
             ),
-            Padding(
+            /*  Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
                 'Payments',
@@ -93,7 +105,7 @@ class DueDetails extends StatelessWidget {
                   ),
                 );
               },
-            ))
+            ))*/
           ],
         ),
       ),

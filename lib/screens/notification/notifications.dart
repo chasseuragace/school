@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolapp/const.dart';
 import 'package:schoolapp/screens/navigation_wrapper/material_notification.dart';
+import 'package:schoolapp/screens/notification/notification_manager.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
-import 'package:schoolapp/template.dart';
 
 class NotificationsPage extends StatefulWidget {
   @override
@@ -50,13 +50,46 @@ final  ValueNotifier<bool> switchDisplay =ValueNotifier<bool>(false);
             child:ValueListenableBuilder<bool>(
               valueListenable: switchDisplay,
               builder: (_, snapshot,child) {
-                return snapshot? noNotifications(context):ListView.separated(
-                itemCount: 18,
-                itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                padding: const EdgeInsets.symmetric(vertical:3.0,),
-                child: index==0?
-                    MaterialNotification(focused: true,
+                      return snapshot
+                          ? //noNotifications(context):
+
+                          notificationManager.manage(
+                              loaded: (List<Schoolnotifications>
+                                      notifications) =>
+                                  ListView.separated(
+                                    itemCount: notifications.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      var data = notifications[index];
+                                      return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 3.0,
+                                          ),
+                                          child: MaterialNotification(
+                                            focused: true,
+                                            content: data.notification,
+                                            title: data.notificationTitle,
+                                          ));
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return SizedBox(
+                                        height: 4,
+                                      );
+                                    },
+                                  ),
+                              loading: () => Text('ing'),
+                              error: (err) => Text('err'))
+                          : ListView.separated(
+                              itemCount: 18,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 3.0,
+                                  ),
+                                  child: index == 0
+                                      ? MaterialNotification(
+                                          focused: true,
                                           content:
                                               "Dear Parents/ Guardians,Greetings! "
                                               "It is hereby notified that the school management is "

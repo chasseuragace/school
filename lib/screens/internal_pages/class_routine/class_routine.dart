@@ -1,32 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:schoolapp/const.dart';
+import 'package:schoolapp/screens/internal_pages/class_routine/routine_controller.dart';
 import 'package:schoolapp/screens/internal_pages/custom_app_bar.dart';
-
 import 'package:schoolapp/screens/internal_pages/exam_routine/heading.dart';
-import 'package:schoolapp/simple_utils/date_formatter.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
-
-
-
-generateRoutine() {
-  var routine = {
-    "09:30 AM \n10:20 AM": ['Nepali', 'Rajendra Dahal'],
-    "10:25 AM \n11:10 AM": ['English', 'B.K Sitaula'],
-    "11:15 AM \n11:45 AM": ['HydroElectricity and Motor Operation', 'Ramailo hai gaiz'],
-    "11:45 AM \n12:30 PM": ['Clemical Bonds and their Equivalence', 'Prof. Narendra Subba'],
-  };
-  Map<String, dynamic> map = {};
-  List<String> days = [];
-  for (int i = -3; i < 4; i++) {
-    days.add(NepaliDateTime.now().add(Duration(days: i)).standardWithDay());
-  }
-  days.forEach((element) {
-    map.putIfAbsent(element, () => element.contains("Monday")?null:routine);
-  });
-  return map;
-}
 
 class ClassRoutine extends StatefulWidget {
   static const String tag = "routine";
@@ -37,7 +15,7 @@ class ClassRoutine extends StatefulWidget {
 
 class _ClassRoutineState extends State<ClassRoutine> {
   ValueNotifier<int> selectedDate;
-  Map<String, dynamic> _classRoutine;
+
   PageController _pageController;
   bool restrictStagger = false;
 
@@ -45,8 +23,8 @@ class _ClassRoutineState extends State<ClassRoutine> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _classRoutine = generateRoutine();
-    selectedDate = ValueNotifier<int>(3)
+
+    selectedDate = ValueNotifier<int>(DateTime.now().weekday)
       ..addListener(() {
         if (!restrictStagger)
           _pageController.animateToPage(selectedDate.value,
@@ -58,89 +36,161 @@ class _ClassRoutineState extends State<ClassRoutine> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(tag: ClassRoutine.tag, title: "Class Routine"),
-            _daysScroll(),
-            ColoredBox(color: Colors.grey[300],child: Padding(
-              padding: const EdgeInsets.symmetric(vertical:8.0),
-              child: Heading(headings: ['Time',"Subject","Teacher"],),
-            )),
-            Expanded(
-              flex: 1,
-              child: PageView.builder(
-                itemCount: 7,
-                //  physics: NeverScrollableScrollPhysics(),
-                controller: _pageController,
-                onPageChanged: (current) {
-                  restrictStagger = true;
-                  selectedDate.value = current;
-                  restrictStagger = false;
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  Map<String, List<String>> data =
-                      _classRoutine[(_classRoutine.keys.toList()[index])];
-
-                  return data==null? makeScaleTween(
-                    context: context,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/chill.png",height:  MediaQuery.of(context).size.height*.3,),
-                          Text( "Some days are better not scheduled",style: Constants.title.copyWith(fontSize: 24,color: Colors.grey[400]),)
-                        ],),
-                  ): ListView(
-                    children: [
-                      ...data.keys.map((e) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal:2.0,vertical: 6),
-                            child: Material(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          .8 /
-                                          3,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(
-                                          e,style: Constants.title.copyWith(fontSize: 14),textAlign: TextAlign.center,
-                                        ),
+    return routineManager.mamage(
+        loading: () => CircularProgressIndicator(),
+        error: (s) => Material(child: Text('error')),
+        loaded: (routines) => Scaffold(
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    CustomAppBar(tag: ClassRoutine.tag, title: "Class Routine"),
+                    _daysScroll(),
+                    ColoredBox(
+                        color: Colors.grey[300],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Heading(
+                            headings: ['Time', "Subject", "Teacher"],
+                          ),
+                        )),
+                    Expanded(
+                      flex: 1,
+                      child: PageView.builder(
+                        itemCount: 7,
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: _pageController,
+                        onPageChanged: (current) {
+                          restrictStagger = true;
+                          selectedDate.value = current;
+                          restrictStagger = false;
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          Map<String, List<String>> data = {};
+                          if (selectedDate.value == 0)
+                            routines.sunday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          if (selectedDate.value == 1)
+                            routines.monday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          if (selectedDate.value == 2)
+                            routines.tuesday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          if (selectedDate.value == 3)
+                            routines.wednesday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          if (selectedDate.value == 4)
+                            routines.thursday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          if (selectedDate.value == 5)
+                            routines.friday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          if (selectedDate.value == 6)
+                            routines.saturday.forEach((element) {
+                              data['${element.startTime} - ${element.endTime}'] =
+                                  [element.subjectName, element.teacherName];
+                            });
+                          return data.isEmpty
+                              ? makeScaleTween(
+                                  context: context,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/chill.png",
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .3,
                                       ),
-                                    ),
-                                    ...data[e].map((e) => Flexible(
-                                          child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                .8 /
-                                                3,
-                                            child: Text(
-                                              e,
-                                              textAlign: TextAlign.center,
-                                              style: Constants.title.copyWith(fontSize: 14),
+                                      Text(
+                                        "Some days are better not scheduled",
+                                        style: Constants.title.copyWith(
+                                            fontSize: 24,
+                                            color: Colors.grey[400]),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : ListView(
+                                  children: [
+                                    ...data.keys.map((e) => Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 2.0, vertical: 6),
+                                          child: Material(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            .8 /
+                                                            3,
+                                                    child: FittedBox(
+                                                      fit: BoxFit.scaleDown,
+                                                      child: Text(
+                                                        e,
+                                                        style: Constants.title
+                                                            .copyWith(
+                                                                fontSize: 14),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  ...data[e]
+                                                      .map((e) => Flexible(
+                                                            child: SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  .8 /
+                                                                  3,
+                                                              child: Text(
+                                                                e,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: Constants
+                                                                    .title
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            14),
+                                                              ),
+                                                            ),
+                                                          ))
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ))
                                   ],
-                                ),
-                              ),
-                            ),
-                          ))
-                    ],
-                  );
-                },
+                                );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
-      ),
-    );
+            ));
   }
 
   ValueListenableBuilder<int> _daysScroll() {
@@ -164,9 +214,17 @@ class _ClassRoutineState extends State<ClassRoutine> {
                         flex: 1,
                         child: Center(
                           child: Text(
-                            _classRoutine.keys.toList()[value],
-                            style: Constants.title.copyWith(fontSize: 16),
-                          ),
+                            [
+                        'Sunday',
+                        'Monday',
+                        'Tuesday',
+                        'Wednesday',
+                        'Thursday',
+                        'Friday',
+                        'Saturday'
+                      ][value],
+                      style: Constants.title.copyWith(fontSize: 16),
+                    ),
                         ),
                       ),
                       IconButton(

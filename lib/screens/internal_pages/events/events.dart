@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
+import 'package:schoolapp/screens/calendar/calendar_manager.dart';
 import 'package:schoolapp/screens/internal_pages/custom_app_bar.dart';
 import 'package:schoolapp/screens/navigation_wrapper/material_notification.dart';
 import 'package:schoolapp/simple_utils/date_formatter.dart';
@@ -15,22 +16,26 @@ class Events extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(tag: tag, title: 'Events'),
-            Expanded(
-              child: ListView.builder(
-                itemCount: events.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 6),
-                    child: MaterialNotification(
-                        compact: true,
-                        id: NepaliDateTime.now().add(Duration(days: 5)),
-                        title: events[events.keys.toList()[index]]['name'],
-                        content: events[events.keys.toList()[index]]['date']),
+            eventsManager.manage(
+                error: (s) => Text('Error'),
+                loaded: (s) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: s.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 6),
+                          child: MaterialNotification(
+                              compact: true,
+                              id: NepaliDateTime.now().add(Duration(days: 5)),
+                              title: s[index].notificationTitle,
+                              content: s[index].eventDate),
+                        );
+                      },
+                    ),
                   );
-                },
-              ),
-            )
+                })
           ],
         ),
       ),

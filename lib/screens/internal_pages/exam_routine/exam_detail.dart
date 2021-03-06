@@ -35,56 +35,61 @@ class ExamDetails extends StatelessWidget {
                 child: const Heading(headings: ["Date", 'Subject','Time'],),
               ),
             ),
-          Expanded(flex: 1,child: ListView(
-            children: [
-              ...(exams[examNames[index]][cls]
-              as Map<dynamic, dynamic>)
-                  .keys
-                  .map((sub) => Padding(
-                padding:
-                const EdgeInsets.symmetric(
-                    horizontal: 8.0,vertical: 4),
-                child: Material(
-                  elevation: 1,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minHeight: 50
-                    ),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.all(
-                          8.0),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment
-                            .spaceBetween,
-                        children: [
-                          ...(exams[examNames[
-                          index]]
-                          [cls][sub]
-                          as List<
-                              dynamic>)
-                              .map((e) =>
-                              Flexible(
-                                  child:  SizedBox(
-                                    width:  (MediaQuery.of(context).size.width*.8)/3,
-                                    child:Center(
-                                      child: Text(
-                                        e,
-                                        textAlign:
-                                        TextAlign
-                                            .center,
-                                      ),
+            (exams[examNames[index]][cls] as List<dynamic>).isNotEmpty
+                ? Expanded(
+                    flex: 1,
+                    child: ListView(
+                      children: [
+                        ...(exams[examNames[index]][cls].map((sub) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 4),
+                              child: Material(
+                                elevation: 1,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                              minHeight: 50
+                          ),
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.all(
+                                8.0),
+                            child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ...[
+                                          (sub as Map<String, dynamic>)[
+                                              'date_of_exam'],
+                                          (sub as Map<String, dynamic>)[
+                                              'subject_name'],
+                                          ((sub as Map<String, dynamic>)[
+                                                  'start_time'] +
+                                              '-' +
+                                              (sub as Map<String, dynamic>)[
+                                                  'end_time'])
+                                        ].map((e) => Flexible(
+                                                child: SizedBox(
+                                              width: (MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .8) /
+                                                  3,
+                                              child: Center(
+                                                child: Text(
+                                                  e,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            )))
+                                      ],
                                     ),
-                                  )))
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ))
-            ],
-          ))
+                                  ),
+                                ),
+                              ),
+                            )))
+                      ],
+                    ))
+                : Text('Empty'),
           ],
         ),
       ),

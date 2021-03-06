@@ -1,170 +1,107 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolapp/screens/homepage/dog_tag_widget.dart';
-import 'package:schoolapp/simple_utils/ui_modifiers.dart';
+import 'package:schoolapp/screens/profile/profile_manager.dart';
 import 'package:schoolapp/simple_utils/widgets.dart';
-import 'package:schoolapp/template.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../const.dart';
 
-class Profile extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
+  final Profile profile;
+
+  const ProfilePage({Key key, this.profile}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfileState extends State<Profile>  with AutomaticKeepAliveClientMixin {
+class _ProfilePageState extends State<ProfilePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    print(widget.profile.toString());
     super.build(context);
     return Scaffold(
-        body: DefaultTabController(
-          length: 2,
-          child: CustomScrollView(
-
-            slivers: [
-              SliverAppBar(
-                toolbarHeight: 119,
-                bottom: WidgetToSliverBuilder(
-                    child: Column(
-                      children: [
-                        //135
-                        StudentDogTag(
-                          image: studentImage,
-                          attributes: studentDogTagAttributes,
-                          name: studentName,
-                        ),
-                        //48
-                     TabBar(
-                          tabs: [
-                            Tab(
-                              child: Text("Overview"),
-                            ),
-                            Tab(
-                              child: Text("Details"),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width),
-
-                elevation: 0,
-                pinned: true,
-                expandedHeight: 305,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Image.asset(
-                        "assets/gys.jpg",
-                        fit: BoxFit.fitWidth,
-                        height: 180,
-
-                        alignment: Alignment.topCenter,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    return false ? Container() : Container(
-                      height: height(context),
-                      child:
-                      TabBarView(
-                        children: [
-                          buildListView(context),
-                          buildDetails(context),
-                        //  buildFindChild(context),
-                        ],
-                      ),
-                    );
-                  },
-                  childCount: 1,
-                ),
-              ),
-
-            ],
-
-          ),
-        ));
+      body: Column(
+        children: [
+          StudentDogTag(profile: widget.profile),
+          Expanded(child: buildDetails(context)),
+        ],
+      ),
+    );
   }
 
   ListView buildDetails(BuildContext context) {
     var attributes = {
-      "Father's Name" : "Thokar Pratap KC",
-      "Mothers's Name" : " Lalita  KC",
-      "Local Gudardian's Name" : "Bivek  KC",
-      "Class teacher'Name" : "Monika Bhatta",
-      "Blood Group" : "B+ve",
-      "Current Adress" : "Mid-Baneshwor , Katmandu",
-
-
-
+      "Father's Name": widget.profile.fatherName,
+      "Mothers's Name": widget.profile.motherName,
+      "Local Gudardian's Name": widget.profile.localGuardian,
+      "Blood Group": widget.profile.bloodGroup,
+      "Current Adress": widget.profile.currentAddress,
     };
     var contacts= {
-      "Student's Contact" : "9824525245",
-      "Gudardian's Contact\nRam kumar mishra" : "9862145555",
+      /* "Gudardian's Contact\n${widget.profile.l}" : "9862145555",*/
     };
     return ListView(
+      shrinkWrap: true,
       children: [
-      ... attributes.keys.map((e) => Padding(
-         padding: const EdgeInsets.all(8.0),
-         child: SizedBox(
-           height: 40,
-           child: Center(
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween ,
-               children: [
-                 Expanded(flex:1,child: Text(e,style: Constants.title.copyWith(fontSize: 16),)),
-                 Expanded(flex:1,child: Text(attributes[e],style: Constants.title.copyWith(fontSize: 16),)),
+        ...attributes.keys.map((e) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 40,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: Text(
+                            e,
+                            style: Constants.title.copyWith(fontSize: 16),
+                          )),
+                      Expanded(flex:1,child: Text(attributes[e],style: Constants.title.copyWith(fontSize: 16),)),
 
 
-               ],),
-           ),
-         ),
-       )),
-      ... contacts.keys.map((e) => Padding(
-         padding: const EdgeInsets.all(8.0),
-         child: GestureDetector(
-           onTap: () async {
-             var url = 'tel:+977${contacts[e]}';
-             if (await canLaunch(url)) {
-             await launch(url);
-             } else {
-             throw 'Could not launch $url';
-             }
-           },
-           child: SizedBox(
-             height: 40,
-             child: Center(
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween ,
-                 children: [
-                   Expanded(flex:1,child: Text(e,style: Constants.title.copyWith(fontSize: 16),)),
-                   Expanded(flex:1,child: Row(
+                    ],),
+                ),
+              ),
+            )),
+        ... contacts.keys.map((e) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () async {
+              var url = 'tel:+977${contacts[e]}';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            child: SizedBox(
+              height: 40,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+                  children: [
+                    Expanded(flex:1,child: Text(e,style: Constants.title.copyWith(fontSize: 16),)),
+                    Expanded(flex:1,child: Row(
 
-                     children: [
-                       Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: Icon(Icons.phone),
-                       ),
-                       Text(contacts[e],style: Constants.title.copyWith(fontSize: 16),),
-                     ],
-                   )),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.phone),
+                        ),
+                        Text(contacts[e],style: Constants.title.copyWith(fontSize: 16),),
+                      ],
+                    )),
 
 
-                 ],),
-             ),
-           ),
-         ),
-       )),
+                  ],),
+              ),
+            ),
+          ),
+        )),
 
       ],
     );

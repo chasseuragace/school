@@ -47,20 +47,19 @@ class _CardLoginState extends State<CardLogin> {
         borderRadius: BorderRadius.circular(24),
         child: Form(
           key: _formKey,
-          child:  MediaQuery.of(context).orientation==Orientation.portrait?  Column(
-
-            children: [
-                loginLogo(),
-                Expanded(flex: 4,child: loginContent(context, _manager))
-            ],
-          ) :Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child:  loginLogo()),
-              Expanded(flex:3,child: loginContent(context, _manager))
-            ],
-          ),
+          child: MediaQuery.of(context).orientation == Orientation.portrait
+              ? Column(
+                  children: [
+                    loginLogo(),
+                    Expanded(flex: 4, child: loginContent(context, _manager))
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expanded(flex: 2, child: loginLogo()),
+                    Expanded(flex: 3, child: loginContent(context, _manager))
+                  ],
+                ),
         ),
       ),
     );
@@ -68,101 +67,102 @@ class _CardLoginState extends State<CardLogin> {
 
   Column loginContent(BuildContext context, LoginManger _manager) {
     return Column(
-              children: [
-
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (s) {
-                            return s.isValidEmail()
-                                ? null
-                                : "${s.trim().length > 0 ? s + " is not a" : "Please enter a"} valid email address.";
-                          },
-                          controller: _un,
-                          onFieldSubmitted: (v) {
-                            _pwFocus.requestFocus();
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: Colors.grey,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24)),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24),
-                                borderSide: BorderSide(color: Colors.green)),
-                            hintText: "Email Address",
-                          ),
-                        ),
-                      ),
-                      _PasswordFieldWidget(controller: _pw, node: _pwFocus),
-                      OpenContainer(
-
-                        closedElevation: 0,
-                        openBuilder: (BuildContext context, void Function({Object returnValue}) action) {
-                        return Center(child: ForgotPassword());
-                      },
-                        closedBuilder: (BuildContext context, void Function() action) {
-                          return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                          child: Align(
-                          alignment: Alignment.centerRight,
-                          child:SizedBox(
-                            height: 20,
-                            child: Text(
-                                "Forgot password?",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                          ),
-                          ));
-                        },
-                      ),
-                      ValueListenableBuilder<LoginStates>(
-                        valueListenable: _manager.currentState,
-                        builder: (con, val, _) {
-                          if (val == LoginStates.error)
-                            showLoginFailMessage(context, _manager);
-                          return AnimatedSwitcher(
-                            child: val == LoginStates.loading
-                                ? SizedBox(
-                                    key: ValueKey("1"),
-                                    height: 50,
-                                    child: Center(
-                                        child: CircularProgressIndicator()))
-                                : SizedBox(
-                                   /* width:
-                                        MediaQuery.of(context).size.width * .554,*/
-                                    key: ValueKey("2"),
-                                    height: 50,
-                                    child:appButton(text: "Login", onTap: () async {
-                                      FocusScope.of(context).unfocus();
-                                      if (_formKey.currentState.validate())
-                                        _manager.login();
-                                    },)
-                                  ),
-                            duration: Duration(milliseconds: 400),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                    ],
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Expanded(
+          flex: 4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (s) {
+                    return s.isValidEmail()
+                        ? null
+                        : "${s.trim().length > 0 ? s + " is not a" : "Please enter a"} valid email address.";
+                  },
+                  controller: _un,
+                  onFieldSubmitted: (v) {
+                    _pwFocus.requestFocus();
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide(color: Colors.green)),
+                    hintText: "Email Address",
                   ),
                 ),
-              ],
-            );
+              ),
+              _PasswordFieldWidget(controller: _pw, node: _pwFocus),
+              OpenContainer(
+                closedElevation: 0,
+                openBuilder: (BuildContext context,
+                    void Function({Object returnValue}) action) {
+                  return Center(child: ForgotPassword());
+                },
+                closedBuilder: (BuildContext context, void Function() action) {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                          height: 20,
+                          child: Text(
+                            "Forgot password?",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ));
+                },
+              ),
+              ValueListenableBuilder<LoginStates>(
+                valueListenable: _manager.currentState,
+                builder: (con, val, _) {
+                  if (val == LoginStates.error)
+                    showLoginFailMessage(context, _manager);
+                  return AnimatedSwitcher(
+                    child: val == LoginStates.loading
+                        ? SizedBox(
+                            key: ValueKey("1"),
+                            height: 50,
+                            child: Center(child: CircularProgressIndicator()))
+                        : SizedBox(
+                            /* width:
+                                        MediaQuery.of(context).size.width * .554,*/
+                            key: ValueKey("2"),
+                            height: 50,
+                            child: appButton(
+                              text: "Login",
+                              onTap: () async {
+                                FocusScope.of(context).unfocus();
+                                if (_formKey.currentState.validate())
+                                  _manager.login(
+                                      username: _un.text, password: _pw.text);
+                              },
+                            )),
+                    duration: Duration(milliseconds: 400),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   Widget loginLogo() {
@@ -170,7 +170,9 @@ class _CardLoginState extends State<CardLogin> {
       children: [
         Image.asset(
           "assets/intro2.png",
-          height:  MediaQuery.of(context).orientation==Orientation.landscape? null: MediaQuery.of(context).size.height*.35,
+          height: MediaQuery.of(context).orientation == Orientation.landscape
+              ? null
+              : MediaQuery.of(context).size.height * .35,
           fit: BoxFit.contain,
         ),
         Text(
